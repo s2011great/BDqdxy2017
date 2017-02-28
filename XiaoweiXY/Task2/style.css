@@ -1,0 +1,188 @@
+/***网页通用样式设置***/
+*{
+    margin: 0;
+    padding: 0;
+}
+.context{
+    width: 100%;
+    margin: 10px 10px;
+    font-size: 16px;
+    background-color:#E1DDDD;
+}
+
+/***导航栏设置***/
+.bar{
+    width: 100%;
+    height: 80px;
+    background-color:#000;
+    color:#FFFFFF;
+}
+.bar img{
+    height: 60px;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+}
+.bar h1{
+    width: 200px;
+    margin-left: 45%;
+    float: left;
+    line-height: 80px;
+
+}
+
+/***导航链接***/
+.bar ul{
+    list-style-type: none;
+    float: right;
+    line-height: 80px;
+}
+.bar ul li{
+    float: left;
+    margin-right: 10px;
+}
+.bar ul li a{
+    text-decoration: none;
+}
+.bar ul li a:link{
+    color:#FFFFFF;
+}
+.bar ul li a:visited{
+    color:#9D9D9D;
+}
+.bar ul li a:hover{
+    color:#03FE32;
+}
+.bar ul li a:active{
+    color:#FF0202;
+}
+
+
+/***文章1 2样式设置***/
+.article{
+    box-shadow: 3px 3px #808080;
+    margin:20px;
+    padding:20px;
+    background-color: #FFF;
+}
+.article h2{
+    font-size: 24px;
+    height: 40px;
+}
+.article h3{
+    font-size: 18px;
+    height: 28px;
+    color:#B1B1B1;
+}
+.author{
+    height: 30px;
+    color:#B1B1B1;
+}
+.section{
+    line-height: 28px;
+}
+#retract{
+    text-indent: 28px;
+}
+.oneImg{
+    margin: 20px 0;
+}
+.list{
+    list-style-type: none;
+    margin-left: 30px;
+}
+
+/***多图样式设置***/
+.oImg{
+    width:400px;
+    border: 1px solid #ccc;
+    margin-bottom: 20px;
+    margin-left: 50px;
+}
+.oImg p{
+    width: 65px;
+    line-height: 40px;
+    margin: 0 auto;
+}
+.oImg img{
+    margin: 10px 20px;
+}
+
+/***文章3样式设置***/
+.numList{
+    margin-left: 50px;
+}
+.numList li{
+    margin: 8px 0;
+}
+.table{
+    width: 100%;
+    border-right: 1px solid #9E9E9E;
+    border-bottom: 1px solid #9E9E9E;
+}
+.table td{
+    border-left: 1px solid #9E9E9E;
+    border-top: 1px solid #9E9E9E;
+}
+#thead{
+    background-color:#000000;
+    color: #FFF;
+}
+#total{
+    background-color:#A6A5A5;
+    font-weight: bold;
+}
+
+/***侧栏样式设置***/
+.aside h2{
+    border-left: 2px solid #808080;
+    line-height: 40px;
+    padding-left: 20px;
+}
+.aside h3{
+    margin-top: 20px;
+}
+.oForm{
+    margin-left: 30%;
+}
+.oLabel{
+    width: 150px;
+    display: inline-block;
+    text-align: right;
+}
+.form-group{
+    border: none;
+    margin: 20px 0;
+}
+.form-email p,.form-psw p{
+    margin-left: 158px;
+    margin-top: 10px;
+    font-size: 14px;
+    color:#A4A4A4;
+}
+.myDescription label{
+    vertical-align: top;
+}
+.form-submit{
+    width: 100%;
+    display: block;
+    height: 40px;
+    font-size: 24px;
+    background-color:#3D3DDB;
+    color: #FFF;
+    border-radius: 10px;
+}
+
+
+
+/***页面底部设置***/
+.foot{
+    width: 100%;
+    height: 80px;
+    background-color:#000;
+    color:#FFFFFF;
+}
+.foot p{
+    line-height: 80px;
+    text-align: center;
+}
