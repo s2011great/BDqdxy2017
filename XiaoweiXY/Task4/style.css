@@ -2,9 +2,26 @@
 	width: 400px;
 	height: 200px;
 	background-color: #ccc;
-	position: absolute;
+	position: fixed;
 	top: 50%;
 	left: 50%;
 	margin-top: -100px;
 	margin-left: -200px;
+	overflow: hidden;
+}
+.roundness1,.roundness2{
+	width: 100px;
+	height: 100px;
+	background-color: #fc0;
+	border-radius: 50px;
+}
+.roundness1{
+	position: absolute;
+	top: -50px;
+	left: -50px;
+}
+.roundness2{
+	position: absolute;
+	top: 150px;
+	left: 350px;
 }
