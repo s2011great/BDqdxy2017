@@ -13,6 +13,8 @@
     height: 52px;
     float: left;
     box-sizing: border-box;
+    margin-right: 20px;
+    margin-bottom: 20px;
 }
 .box p{
     line-height: 50px;
@@ -22,48 +24,73 @@
     overflow: auto;
     margin: 20px;
 }
-@media (min-width: 769px){
+@media screen and (min-width: 769px){
     .col-md-4{
-        width: 33.333333%;
+        width: calc(33.333333% - 20px);
+        width: -moz-calc(33.333333% - 20px);
+        width: -webkit-calc(33.333333% - 20px);
     }
     .col-md-3{
-        width: 25%;
+        width: calc(25% - 20px);
+        width: -moz-calc(25% - 20px);
+        width: -webkit-calc(25% - 20px);
     }
     .col-md-6{
-        width: 50%;
+        width: calc(50% - 20px);
+        width: -moz-calc(50% - 20px);
+        width: -webkit-calc(50% - 20px);
     }
     .col-md-1{
-        width: 8.3%;
+        width: calc(8.3% - 20px);
+        width: -moz-calc(8.3% - 20px);
+        width: -webkit-calc(8.3% - 20px);
     }
     .col-md-2{
-        width: 16.6%;
+        width: calc(16.6% - 20px);
+        width: -moz-calc(16.6% - 20px);
+        width: -webkit-calc(16.6% - 20px);
     }
     .col-md-6{
-        width: 50%;
+        width: calc(50% - 20px);
+        width: -moz-calc(50% - 20px);
+        width: -webkit-calc(50% - 20px);
     }
 }
 
-@media (max-width: 768px) {
+@media screen and (max-width: 768px) {
     .col-lg-6{
-        width: 50%;
+        width: calc(50% - 20px);
+        width: -moz-calc(50% - 20px);
+        width: -webkit-calc(50% - 20px);
     }
     .col-lg-12{
-        width: 100%;
+        width: calc(100% - 20px);
+        width: -moz-calc(100% - 20px);
+        width: -webkit-calc(100% - 20px);
     }
     .col-lg-3{
-        width: 25%;
+        width: calc(25% - 20px);
+        width: -moz-calc(25% - 20px);
+        width: -webkit-calc(25% - 20px);
     }
     .col-lg-6{
-        width: 50%;
+        width: calc(50% - 20px);
+        width: -moz-calc(50% - 20px);
+        width: -webkit-calc(50% - 20px);
     }
     .col-lg-2{
-        width: 16.6%
+        width: calc(16.6% - 20px);
+        width: -moz-calc(16.6% - 20px);
+        width: -webkit-calc(16.6% - 20px);
     }
     .col-lg-8{
-        width: 66.4%;
+        width: calc(66.4% - 20px);
+        width: -moz-calc(66.4% - 20px);
+        width: -webkit-calc(66.4% - 20px);
     }
     .col-lg-3{
-        width: 25%;
+        width: calc(25% - 20px);
+        width: -moz-calc(25% - 20px);
+        width: -webkit-calc(25% - 20px);
     }
 }
-
