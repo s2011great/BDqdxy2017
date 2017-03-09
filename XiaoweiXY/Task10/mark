@@ -33,4 +33,69 @@ flex-direction || flex-wrap || flex-flow || justify-content || align-items || al
 flex-direction默认值是row.
 
 5.2 flex-wrap
-值:
+值:wrap || nowrap || wrap-reverse
+nowrap:所有伸缩项目不能换行
+wrap: 伸缩项目可多行布局
+wrap-reverse:伸缩项目可多行布局，但是第二行的位置是在第一行之上。和wrap相反。
+
+flex-wrap默认值为nowrap
+
+5.3 flex-flow 是flex-direction和flex-wrap两个属性的集合。
+
+5.4 justify-content
+值：flex-start || flex-end || center || space-between || space-around
+
+justify-content主要定义了伸缩项目在伸缩容器的主轴(Main-Axis)上的对齐方式。
+
+5.5 align-items
+值：flex-start || flex-end || center || stretch || baseline
+
+align-items主要用来控制伸缩项目在侧轴(Cross Axis)方向上的对齐方式。
+align-items默认值是：strech,strech让所有的伸缩项目的高度和伸缩容器相同。
+flex-start/flex-end/center都是在Cross Axis方向的对齐方式.
+baseline是基于伸缩项目的基准线。
+
+5.6 align-content
+align-content 针对多行的flex容器，即flex-wrap为wrap的伸缩容器
+值：stretch || flex-start || flex-end || center
+
+stretch会拉伸flex项目，让他们沿着Cross-Axis适应flex容器可用空间.
+flex-start/flex-end/center都是应用与多行的伸缩容器中，使得伸缩项目在Cross-Axis方向上的对齐方式。
+
+
+六、flex项目属性
+order || flex-grow || flex-shrink || flex-basis
+
+6.1 order
+设置伸缩项目的在显示时的位置。
+
+默认的容器内的伸缩项目的order为0，flex项目会根据order的值重新排序，由低到高。
+order可正值可负值。
+
+6.2 flex-grow 和 flex-shrink
+可定义伸缩项目的变大和变小
+
+flex-grow 值为： 0 || positive number  0或者大于0的整数。
+为0表示flex-grow关闭，不会增长。flex-grow属性值的数字并不只是开关，还有放大的倍数问题。
+为大于0表示flex-grow打开，直接填充伸缩容器的空间，随着伸缩容器的放大而放大。
+
+flex-shrink 为缩小，和flex-grow相同。
+
+6.3 flex-basis
+设置flex项目的初始大小。
+
+flex-basis默认值为 auto。此时伸缩项目的大小由flex项目的内容决定，随着内容的多少，可以发生变化.
+flex-basis 还可以取用于width属性的值，比如 px || em || % || rem
+flex-basis为0时，必须写为 flex-basis: 0px;
+
+
+6.4 flex
+flex时 flex-grow | flex-shrink | flex-basis,顺序也是这样。
+
+6.5 align-self
+值： auto || flex-start || flex-end || center || baseline || stretch
+
+和align-items相似，align-items是设置flex容器中所有flex项目的整体沿侧轴(Cross Axis)对齐的方式.
+align-self是设置某一个flex项目在不影响其他项目的同时，沿侧轴(Cross Axis)的对齐方式。
+
+auto 值，是说如果父元素有设置align-items，则继承父元素的值。如果没有则设置该元素为stretch。
