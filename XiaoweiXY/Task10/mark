@@ -5,6 +5,7 @@ flexbox时布局模块，不是单一的元素属性。它包含父元素和子�
 Flexbox概念：
 
 一、flexbox包括伸缩容器、伸缩项目。简单说就是定义了伸缩容器内的伸缩项目该如何布局。
+    设置伸缩容器的CSS属性 display:flexbox 或者 display:inline-flexbox,这样可以启动一个flexbox格式化上下文
 
 二、伸缩行:伸缩项目是沿着伸缩容器内的某一个伸缩行进行定位。
 一般来说都是：从左往右、从上往下。
@@ -20,3 +21,16 @@ Flexbox概念：
 侧轴起点
 侧轴终点
 侧轴方向
+
+五、Flex容器属性
+
+flex-direction || flex-wrap || flex-flow || justify-content || align-items || align-content
+
+5.1 flex-direction
+值： row || row-reverse || column || column-reverse
+即水平和垂直方向，其实在flex中没有方向，水平即主轴（Main-Axis）,垂直即侧轴(Cross-Axis)
+
+flex-direction默认值是row.
+
+5.2 flex-wrap
+值:
