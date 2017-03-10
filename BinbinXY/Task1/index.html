@@ -12,15 +12,37 @@
 
 <script type="text/javascript">
 
-(function() {
-  /*
-  在注释下方写下代码
-  给按钮button绑定一个点击事件
-  在事件处理函数中
-  获取aqi-input输入的值，并显示在aqi-display中
-  */
+    (function() {
+      /*
+      在注释下方写下代码
+      给按钮button绑定一个点击事件
+      在事件处理函数中
+      获取aqi-input输入的值，并显示在aqi-display中
+      */
 
-})();
+      /*获取按钮*/
+      var oBtn = document.getElementById("button");
+
+      /*事件处理函数*/
+      function myClick(){
+        var oDisplay = document.getElementById("aqi-display");
+        var oInput = document.getElementById("aqi-input");
+
+        if(oInput.value){
+            // oDisplay.textContent = oInput.value;
+            // oDisplay.innerHTML = oInput.value;
+            oDisplay.innerText = oInput.value;
+        }
+      }
+
+      /*事件监听IE和标准函数*/
+      if(oBtn.addEventListener){
+        oBtn.addEventListener("click",myClick,false);
+      } else if(oBtn.attachEvent){
+        oBtn.attachEvent("onClick",myClick);
+      }
+
+    })();
 
 </script>
 </body>
