@@ -46,6 +46,15 @@ function getData() {
     ……
   ]
   */
+  var source = document.getELementById("source");
+  var li_List = source.getElementByTagName("li");
+  var data = [];
+  var li_context = [];
+  li_List.forEach(function(value){
+    li_context[0] = value.innerHTML.split("：")[0];
+    li_context[1] = value.innerHTML.split("：")[1].
+  });
+
 
   return data;
 
