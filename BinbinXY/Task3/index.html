@@ -46,13 +46,16 @@ function getData() {
     ……
   ]
   */
-  var source = document.getELementById("source");
-  var li_List = source.getElementByTagName("li");
+  var source = document.getElementById('source');
+  var li_List = source.getElementsByTagName("li");
+  console.log(li_List);
   var data = [];
   var li_context = [];
   li_List.forEach(function(value){
+    var oB = value.getElementsByTagName("b");
     li_context[0] = value.innerHTML.split("：")[0];
-    li_context[1] = value.innerHTML.split("：")[1].
+    li_context[1] = oB.innerHTML;
+    data.push(li_context);
   });
 
 
@@ -66,6 +69,9 @@ function getData() {
  * 返回一个排序后的数组
  */
 function sortAqiData(data) {
+  data.sort(function(a,b){
+    return a[1] - b[1];
+  });
 
 }
 
@@ -75,6 +81,16 @@ function sortAqiData(data) {
  * 格式见ul中的注释的部分
  */
 function render(data) {
+  var oUl = document.getElementById("resort");
+  var num = ['第一名','第二名','第三名','第四名','第五名','第六名','第七名','第八名'];
+  var oString;
+
+  for(var i = 0; i < data.length; i++){
+    var oLi = document.createElement('li');
+    oString = num[i] + '：' + data[i][0] + '：' + '<b>' + data[i][1] + '</b>';
+    oLi.innerHTML = oString;
+    oUl.appendChild(oLi);
+  } 
 
 }
 
@@ -87,6 +103,13 @@ function btnHandle() {
 function init() {
 
   // 在这下面给sort-btn绑定一个点击事件，点击时触发btnHandle函数
+
+  var oBtn = document.getElementById('sort-btn');
+  if(oBtn.addEventListener){
+    oBtn.addEventListener("click",btnHandle,false);
+  } else if(oBtn.attachEvent){
+    oBtn.attachEvent("onClick",btnHandle);
+  }
 
 }
 
