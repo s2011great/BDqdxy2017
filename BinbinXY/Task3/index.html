@@ -46,17 +46,18 @@ function getData() {
     ……
   ]
   */
+  /*获取元素*/
   var source = document.getElementById('source');
   var li_List = source.getElementsByTagName("li");
   var oB = source.getElementsByTagName("b");
-  //console.log(li_List);
   var data = [];
+  /*循环遍历li*/
   for(var i = 0; i < li_List.length; i++){
     var dataItem = [];
     var value = li_List[i];
-    dataItem[0] = value.innerHTML.split("：")[0];
-    dataItem[1] = oB[i].innerHTML;
-    data.push(dataItem);
+    dataItem[0] = value.innerHTML.split("：")[0];   //获取‘：’之前的部分
+    dataItem[1] = oB[i].innerHTML;  //获取b标签中的部分
+    data.push(dataItem);  //将获取的内容push到data数组中
   }
 
 
@@ -70,10 +71,10 @@ function getData() {
  * 返回一个排序后的数组
  */
 function sortAqiData(data) {
+  /*利用数组的sort方法对其进行从小到大的排序*/
   data.sort(function(a,b){
     return a[1] - b[1];
   });
-  console.log(data);
 
   return data;
 
@@ -85,15 +86,16 @@ function sortAqiData(data) {
  * 格式见ul中的注释的部分
  */
 function render(data) {
-  var oUl = document.getElementById("resort");
+  var oUl = document.getElementById("resort");  //获取标签
   var num = ['第一名','第二名','第三名','第四名','第五名','第六名','第七名','第八名'];
   var oString;
 
+  /*遍历排序好的data数组*/
   for(var i = 0; i < data.length; i++){
-    var oLi = document.createElement('li');
-    oString = num[i] + '：' + data[i][0] + '：' + '<b>' + data[i][1] + '</b>';
-    oLi.innerHTML = oString;
-    oUl.appendChild(oLi);
+    var oLi = document.createElement('li');  //创建一个li标签元素
+    oString = num[i] + '：' + data[i][0] + '：' + '<b>' + data[i][1] + '</b>';  //拼接字符串
+    oLi.innerHTML = oString;  //将拼接的字符串放到创建的li标签内
+    oUl.appendChild(oLi);  //将li标签添加到ul的子标签之后
   } 
 
 }
@@ -108,11 +110,12 @@ function init() {
 
   // 在这下面给sort-btn绑定一个点击事件，点击时触发btnHandle函数
 
+  /*为按钮绑定事件*/
   var oBtn = document.getElementById('sort-btn');
   if(oBtn.addEventListener){
-    oBtn.addEventListener("click",btnHandle,false);
+    oBtn.addEventListener("click",btnHandle,false);  //标准事件绑定
   } else if(oBtn.attachEvent){
-    oBtn.attachEvent("onClick",btnHandle);
+    oBtn.attachEvent("onClick",btnHandle);  //早期IE事件绑定
   }
 
 }
