@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>百度前端学院斌斌学院Task4</title>
+</head>
+<body>
+    <div class="container">
+        <input type="text" name="inputQueue" placeholder="请输入数字" id="oInput" />
+        <button id="leftIn">左侧入</button>
+        <button id="rightIn">右侧入</button>
+        <button id="leftOut">左侧出</button>
+        <button id="rightOut">右侧出</button>
+    </div>
+    <div id="displayBox"></div>
+
+    <script type="text/javascript">
+
+        /*获取元素*/
+        var oInput = document.getElementById('oInput');
+        var leftIn = document.getElementById('leftIn');
+        var rightIn = document.getElementById('rightIn');
+        var leftOut = document.getElementById('leftOut');
+        var rightOut = document.getElementById('rightOut');
+        var displayBox = document.getElementById('displayBox');
+
+
+
+        /*验证输入表单*/
+        oInput.addEventListener("change",function(){
+            var pattern = new RegExp('^[0-9]+$');
+            if(!pattern.test(oInput.value) && oInput.value){
+                alert("请在输入框中输入数字");
+                leftIn.disabled="disabled";
+                rightIn.disabled="disabled";
+            } else if(pattern.test(oInput.value)){
+                leftIn.disabled="";
+                rightIn.disabled="";
+            }
+        },false);
+
+        /*左侧入函数*/
+        function fn_leftIn(){
+            var numP = document.createElement("p");   //创建p标签
+            numP.innerText = oInput.value;
+            numP.style.display = "inline";
+            numP.style.backgroundColor = "red";
+            numP.style.margin = "10px";
+
+            displayBox.insertBefore(numP,displayBox.childNodes[0]);
+
+            leftOut.disabled="";
+            rightOut.disabled="";
+        }
+
+        /*右侧入函数*/
+        function fn_rightIn(){
+            var numP = document.createElement("p");
+            numP.innerText = oInput.value;
+            numP.style.display = "inline";
+            numP.style.backgroundColor = "red";
+            numP.style.margin = "10px";
+
+            displayBox.insertBefore(numP,displayBox.lastChild.nextSibling);
+
+            leftOut.disabled="";
+            rightOut.disabled="";
+        }
+
+        /*左侧出函数*/
+        function fn_leftOut(){
+            if(displayBox.firstChild){
+                displayBox.removeChild(displayBox.firstChild);
+            } else {
+                leftOut.disabled="disabled";
+                rightOut.disabled="disabled";
+            }
+        }
+
+        /*右侧出函数*/
+        function fn_rightOut(){
+            if(displayBox.lastChild){
+                displayBox.removeChild(displayBox.lastChild);
+            } else {
+                leftOut.disabled="disabled";
+                rightOut.disabled="disabled";
+            }
+        }
+
+
+        /*添加按钮点击事件*/
+        leftIn.addEventListener("click",fn_leftIn,false);
+        rightIn.addEventListener("click",fn_rightIn,false);
+        leftOut.addEventListener("click",fn_leftOut,false);
+        rightOut.addEventListener("click",fn_rightOut,false);
+    </script>
+</body>
+</html>
