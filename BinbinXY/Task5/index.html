@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>百度前端学院斌斌学院Task4</title>
+    <style type="text/css">
+        *{
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <input type="text" name="inputQueue" placeholder="请输入数字" id="oInput" />
+        <button id="leftIn">左侧入</button>
+        <button id="rightIn">右侧入</button>
+        <button id="leftOut">左侧出</button>
+        <button id="rightOut">右侧出</button>
+    </div>
+    <ul id="displayBox" style="list-style-type: none; height: 120px; display: flex; position: relative; align-items: flex-end;"></ul>
+
+    <button id="numRank">从小到大排序</button>
+
+    <script type="text/javascript">
+
+        /*获取元素*/
+        var oInput = document.getElementById('oInput');
+        var leftIn = document.getElementById('leftIn');
+        var rightIn = document.getElementById('rightIn');
+        var leftOut = document.getElementById('leftOut');
+        var rightOut = document.getElementById('rightOut');
+        var displayBox = document.getElementById('displayBox');
+        var numRank = document.getElementById('numRank');
+
+
+
+        /*验证输入表单*/
+        oInput.addEventListener("change",function(){
+            var pattern = new RegExp('^[0-9]+$');
+            if(!pattern.test(oInput.value) && oInput.value){
+                alert("请在输入框中输入数字");
+                leftIn.disabled="disabled";
+                rightIn.disabled="disabled";
+            } else if(pattern.test(oInput.value)){
+                if(!(oInput.value >= 10 && oInput.value <= 100)){
+                    alert("数字范围为10-100");
+                    leftIn.disabled="disabled";
+                    rightIn.disabled="disabled";
+                } else{
+                    leftIn.disabled="";
+                    rightIn.disabled="";
+                }
+            }
+        },false);
+
+        /*左侧入函数*/
+        function fn_leftIn(){
+            if(displayBox.childNodes.length == 60){
+                alert("添加的元素已达上限。");
+            } else{
+                var numP = document.createElement("li");   //创建li标签
+                numP.style.width = "20px";
+                numP.style.height = oInput.value + "px";
+                numP.style.backgroundColor = "red";
+                numP.style.float = "left";
+                // numP.style.marginLeft = "1px";
+
+                displayBox.insertBefore(numP,displayBox.childNodes[0]);
+
+                leftOut.disabled="";
+                rightOut.disabled="";
+            }
+        }
+
+        /*右侧入函数*/
+        function fn_rightIn(){
+            if(displayBox.childNodes.length == 60){
+                alert("添加的元素已达上限。");
+            } else{
+                var numP = document.createElement("li");
+                numP.style.width = "20px";
+                numP.style.height = oInput.value + "px";
+                numP.style.backgroundColor = "red";
+                numP.style.float = "left";
+                // numP.style.marginLeft = "1px";
+
+                displayBox.insertBefore(numP,displayBox.lastChild.nextSibling);
+
+                leftOut.disabled="";
+                rightOut.disabled="";
+            }
+        }
+
+        /*左侧出函数*/
+        function fn_leftOut(){
+            if(displayBox.firstChild){
+                displayBox.removeChild(displayBox.firstChild);
+            } else {
+                leftOut.disabled="disabled";
+                rightOut.disabled="disabled";
+            }
+        }
+
+        /*右侧出函数*/
+        function fn_rightOut(){
+            if(displayBox.lastChild){
+                displayBox.removeChild(displayBox.lastChild);
+            } else {
+                leftOut.disabled="disabled";
+                rightOut.disabled="disabled";
+            }
+        }
+
+        /*从小到大排序函数*/
+        function fn_rank(){
+            var liBox = displayBox.childNodes;
+            var liHeight = [];
+            var liOffset = [];
+            for(var i = 0; i < liBox.length; i++){
+                liHeight[i] = liBox[i].style.height.split("px")[0];
+                liOffset[i] = liBox[i].offsetLeft;
+            }
+            for(var i = 0; i < liBox.length; i++){
+                liBox[i].style.left = liOffset[i] + "px";
+                liBox[i].style.position = "absolute";
+            }
+            for(var j = 0; j < liBox.length - 1; j++){
+                for(var n = j + 1; n < liBox.length; n++){
+                    setTimeout((function(j,n){
+                        var temp;
+                        if(liBox[j].style.height.split("px")[0] > liBox[n].style.height.split("px")[0]){
+                            temp = liBox[j].offsetLeft;
+                            liBox[j].style.left = liBox[n].offsetLeft + "px";
+                            liBox[n].style.left = temp + "px";
+                        }
+                    })(j,n),j * 1000);
+                }
+            }
+        }
+
+
+        /*添加按钮点击事件*/
+        leftIn.addEventListener("click",fn_leftIn,false);
+        rightIn.addEventListener("click",fn_rightIn,false);
+        leftOut.addEventListener("click",fn_leftOut,false);
+        rightOut.addEventListener("click",fn_rightOut,false);
+        numRank.addEventListener("click",fn_rank,false);
+    </script>
+</body>
+</html>
