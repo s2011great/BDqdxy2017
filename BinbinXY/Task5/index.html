@@ -62,7 +62,7 @@
         function fn_leftIn(){
             if(data.length < 60){
                 if(getInput()  != null){
-                    data.unshift(getInput());  //数据model修改
+                    data.unshift(parseInt(getInput(),10));  //数据model修改
                     data_render();  //绘制view
                 }
             } else{
@@ -74,7 +74,7 @@
         function fn_rightIn(){
             if(data.length < 60){
                 if(getInput()  != null){
-                    data.push(getInput());  //数据model修改
+                    data.push(parseInt(getInput(),10));  //数据model修改
                     data_render();  //绘制view
                 }
             } else{
