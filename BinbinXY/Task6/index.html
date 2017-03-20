@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>百度前端学院斌斌学院Task6</title>
+    <style type="text/css">
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        #displayBox{
+            width: auto;
+            height: 120px;
+            margin-top: 20px;
+            display: flex;
+            align-items: flex-end;
+        }
+        #displayBox div{
+            width: auto;
+            height: 30px;
+            margin: 2px;
+            background-color: red;
+        }
+        .query{
+            background-color: yellow;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <textarea rows="5" cols="60" id="oInput" placeholder="请在此输入内容"></textarea>
+        <button id="leftIn">左侧入</button>
+        <button id="rightIn">右侧入</button>
+        <button id="leftOut">左侧出</button>
+        <button id="rightOut">右侧出</button>
+    </div>
+    <div id="displayBox"></div>
+
+    <input type="text" id="queryInput">
+    <button id="oQuery">查询</button>
+
+
+    <script type="text/javascript">
+
+        /*获取元素*/
+        var oInput = document.getElementById('oInput');
+        var leftIn = document.getElementById('leftIn');
+        var rightIn = document.getElementById('rightIn');
+        var leftOut = document.getElementById('leftOut');
+        var rightOut = document.getElementById('rightOut');
+        var displayBox = document.getElementById('displayBox');
+        var queryInput = document.getElementById('queryInput');
+        var oQuery = document.getElementById('oQuery');
+
+        var data = [];
+
+        /*验证输入表单*/
+        function getInput(){
+            var oString = oInput.value;
+
+            return oString;
+        }
+
+        /*左侧入函数*/
+        function fn_leftIn(){
+            /*回车，逗号（全角半角均可），顿号，空格（全角半角、Tab等均可）等符号作为不同内容的间隔*/
+            var string_data = [];
+            if(data.length < 60){
+                if(getInput()  != null){
+                    string_data = getInput().split(/\s|,|，|、/);
+                    for(var i = string_data.length-1; i >= 0; i--){
+                        data.unshift(string_data[i]);  //数据model修改
+                    }
+                    data_render();  //绘制view
+                }
+            } else{
+                alert("队列已满");
+            }
+        }
+
+        /*右侧入函数*/
+        function fn_rightIn(){
+
+            var string_data = [];
+            if(data.length < 60){
+                if(getInput()  != null){
+                    string_data = getInput().split(/\s|,|，|、/);
+                    for(var i = string_data.length-1; i >= 0; i--){
+                         data.push(string_data[i]);  //数据model修改
+                    }
+
+                    data_render();  //绘制view
+                }
+            } else{
+                alert("队列已满");
+            }
+        }
+
+        /*左侧出函数*/
+        function fn_leftOut(){
+            if(data.length != 0){
+                data.shift();  //数据model修改
+
+                data_render();  //绘制view
+            } else{
+                alert("数据已空");
+            }
+        }
+
+        /*右侧出函数*/
+        function fn_rightOut(){
+            if(data.length != 0){
+                data.pop();  //数据model修改
+
+                data_render();  //绘制view
+            } else{
+                alert("数据已空");
+            }
+        }
+
+        /*查询函数*/
+        function fn_query(){
+            var pattern = new RegExp(queryInput.value + "");
+            data.forEach(function(item,index){
+                if(pattern.test(item)){
+                    displayBox.childNodes[index].className = "query";
+                }
+            });
+        }
+
+
+
+        /*绘制view的函数*/
+        function data_render(){
+            displayBox.innerHTML = null;  //清空显示容器中的元素，以备重新绘制view
+
+            data.forEach(function(item, index){    //forEach遍历model中的数据
+                var oDiv = document.createElement('div');  //创建div元素
+                oDiv.innerHTML = item;
+                displayBox.appendChild(oDiv);
+            });
+
+            oInput.value = null;
+
+        }
+
+
+        /*添加按钮点击事件*/
+        leftIn.addEventListener("click",fn_leftIn,false);
+        rightIn.addEventListener("click",fn_rightIn,false);
+        leftOut.addEventListener("click",fn_leftOut,false);
+        rightOut.addEventListener("click",fn_rightOut,false);
+        oQuery.addEventListener("click",fn_query,false);
+    </script>
+</body>
+</html>
