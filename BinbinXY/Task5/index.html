@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>百度前端学院斌斌学院Task5</title>
+    <style type="text/css">
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        #displayBox{
+            width: auto;
+            height: 120px;
+            margin-top: 20px;
+            display: flex;
+            align-items: flex-end;
+        }
+        #displayBox div{
+            width:20px;
+            margin: 2px;
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <input type="number" name="inputQueue" placeholder="请输入10-100数字" id="oInput" />
+        <button id="leftIn">左侧入</button>
+        <button id="rightIn">右侧入</button>
+        <button id="leftOut">左侧出</button>
+        <button id="rightOut">右侧出</button>
+    </div>
+    <div id="displayBox"></div>
+
+    <button id="numRank">从小到大排序</button>
+
+    <script type="text/javascript">
+
+        /*获取元素*/
+        var oInput = document.getElementById('oInput');
+        var leftIn = document.getElementById('leftIn');
+        var rightIn = document.getElementById('rightIn');
+        var leftOut = document.getElementById('leftOut');
+        var rightOut = document.getElementById('rightOut');
+        var displayBox = document.getElementById('displayBox');
+        var numRank = document.getElementById('numRank');
+
+        /*定义数据model*/
+        var data = [];
+
+        /*验证输入表单*/
+        function getInput(){
+            var num = oInput.value;
+            if(num >= 10 && num <= 100){
+                return num;
+            } else{
+                alert("请输入10-100范围内的数字");
+            }
+        }
+
+        /*左侧入函数*/
+        function fn_leftIn(){
+            if(data.length < 60){
+                if(getInput()  != null){
+                    data.unshift(getInput());  //数据model修改
+                    data_render();  //绘制view
+                }
+            } else{
+                alert("数据已满");
+            }
+        }
+
+        /*右侧入函数*/
+        function fn_rightIn(){
+            if(data.length < 60){
+                if(getInput()  != null){
+                    data.push(getInput());  //数据model修改
+                    data_render();  //绘制view
+                }
+            } else{
+                alert("数据已满");
+            }
+        }
+
+        /*左侧出函数*/
+        function fn_leftOut(){
+            if(data.length != 0){
+                data.shift();  //数据model修改
+
+                data_render();  //绘制view
+            } else{
+                alert("数据已空");
+            }
+        }
+
+        /*右侧出函数*/
+        function fn_rightOut(){
+            if(data.length != 0){
+                data.pop();  //数据model修改
+
+                data_render();  //绘制view
+            } else{
+                alert("数据已空");
+            }
+        }
+
+
+
+        /*绘制view的函数*/
+        function data_render(){
+            displayBox.innerHTML = null;  //清空显示容器中的元素，以备重新绘制view
+
+            data.forEach(function(item, index){    //forEach遍历model中的数据
+                var oDiv = document.createElement('div');  //创建div元素
+                oDiv.style.height = item + "px";
+                displayBox.appendChild(oDiv);
+            });
+
+            oInput.value = null;
+
+        }
+
+
+        var data_snapshot = [];   //定义数组，记录每一次data冒泡排序时的顺序，以备之后可视化展示
+        /*数据model冒泡排序*/
+        function data_rank(){
+            var temp;
+            for(var i = 0; i < data.length - 1; i++)   //冒泡排序
+                for(var j = i + 1; j < data.length; j++){
+                    if(data[i] > data[j]){
+                        temp = data[i];
+                        data[i] = data[j];
+                        data[j] = temp;
+                        data_snapshot.push(JSON.parse(JSON.stringify(data)));
+                    }
+                }
+        }
+
+        /*data_snapshot数据绘制函数*/
+        function draw(){
+            if(data_snapshot.length != 0){
+                displayBox.innerHTML = null;   //判断有可渲染的数据时，才清空显示容器中的元素
+            }
+
+            var photo = data_snapshot.shift() || [];  //取出数据model排序时记录的每一次数据变化
+
+            if(photo.length != 0){
+                photo.forEach(function(item,index){
+                    var oDiv = document.createElement('div');  //创建div元素
+                    oDiv.style.height = item + "px";
+                    displayBox.appendChild(oDiv);
+                });
+            } else{
+                clearInterval(timer);
+                alert("排序完成");
+            }
+        }
+
+        /*从小到大排序函数*/
+        function fn_rank(){
+            data_rank();
+            timer = setInterval(draw,1000);
+        }
+
+
+        /*添加按钮点击事件*/
+        leftIn.addEventListener("click",fn_leftIn,false);
+        rightIn.addEventListener("click",fn_rightIn,false);
+        leftOut.addEventListener("click",fn_leftOut,false);
+        rightOut.addEventListener("click",fn_rightOut,false);
+        numRank.addEventListener("click",fn_rank,false);
+    </script>
+</body>
+</html>
