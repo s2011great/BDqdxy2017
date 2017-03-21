@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>百度前端学院斌斌学院Task7</title>
+    <style type="text/css">
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .tree{
+            border: 1px solid #000;
+            background-color: #fff;
+        }
+        .div0{
+            width: 800px;
+            height: 120px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-top: -100px;
+            margin-left: -400px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            z-index: 1;
+        }
+        .div1{
+            width:380px;
+            height: 100px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            z-index: 10;
+        }
+        .div2{
+            width: 170px;
+            height: 80px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            z-index: 100;
+        }
+        .div3{
+            width: 65px;
+            height: 60px;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+        .btnBox{
+            width: 600px;
+            height: 60px;
+            position: absolute;
+            top: 20%;
+            left: 50%;
+            margin-left: -300px;
+            border: none;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+        .btnBox button{
+            width: 180px;
+            height: 60px;
+            background-color: #FFEA03;
+            border-radius: 10px;
+            color: #000;
+            font-size: 24px;
+        }
+        button:focus{
+            outline: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="btnBox">
+        <button id="btnDLR" onclick="dlrTraverse()">前序遍历DLR</button>
+        <button id="btnLDR" onclick="ldrTraverse()">中序遍历LDR</button>
+        <button id="btnLRD" onclick="lrdTraverse()">后序遍历LRD</button>
+    </div>
+    <div id="container">
+        <div class="tree div0">0
+            <div class="tree div1">1
+                <div class="tree div2">2
+                    <div class="tree div3">3</div>
+                    <div class="tree div3">4</div>
+                </div>
+                <div class="tree div2">5
+                    <div class="tree div3">6</div>
+                    <div class="tree div3">7</div>
+                </div>
+            </div>
+            <div class="tree div1">8
+                <div class="tree div2">9
+                    <div class="tree div3">10</div>
+                    <div class="tree div3">11</div>
+                </div>
+                <div class="tree div2">12
+                    <div class="tree div3">13</div>
+                    <div class="tree div3">14</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        var container = document.getElementById("container");
+        var tree = document.getElementsByClassName("tree");
+
+        var binaryTree = {
+            data: tree[0],
+            left: {
+                data: tree[1],
+                left: {
+                    data: tree[2],
+                    left: {
+                        data: tree[3],
+                        left: null,
+                        right: null
+                    },
+                    right: {
+                        data: tree[4],
+                        left: null,
+                        right: null
+                    }
+                },
+                right: {
+                    data: tree[5],
+                    left: {
+                        data: tree[6],
+                        left: null,
+                        right: null
+                    },
+                    right: {
+                        data: tree[7],
+                        left: null,
+                        right: null
+                    }
+                }
+            },
+            right: {
+                data: tree[8],
+                left: {
+                    data: tree[9],
+                    left: {
+                        data: tree[10],
+                        left: null,
+                        right: null
+                    },
+                    right: {
+                        data: tree[11],
+                        left: null,
+                        right: null
+                    }
+                },
+                right: {
+                    data: tree[12],
+                    left: {
+                        data: tree[13],
+                        left: null,
+                        right: null
+                    },
+                    right: {
+                        data: tree[14],
+                        left: null,
+                        right: null
+                    }
+                }
+            }
+        };
+
+        var counter = 0;
+
+        function show(nodeList){
+            nodeList[counter].style.backgroundColor = "red";
+            var num = counter;
+            counter++;
+            setTimeout(function(){
+                nodeList[num].style.backgroundColor = "#fff";
+            },500);
+        }
+
+        /*二叉树前序遍历函数*/
+        function dlrFn(){
+            var dlrArr = [];
+            var dlrListRec = function (node){
+                if(node){
+                    if(node.data){
+                        dlrArr.push(node.data);
+                    }
+                    dlrListRec(node.left);
+                    dlrListRec(node.right);
+                }
+            }
+            dlrListRec(binaryTree);
+            return dlrArr;
+        }
+
+        /*二叉树中序遍历函数*/
+        function ldrFn(){
+            var ldrArr = [];
+            var ldrListRec = function (node){
+                if(node){
+                    ldrListRec(node.left);
+                    if(node.data){
+                        ldrArr.push(node.data);
+                    }
+                    ldrListRec(node.right);
+                }
+            }
+            ldrListRec(binaryTree);
+            return ldrArr;
+        }
+
+        /*二叉树后序遍历函数*/
+        function lrdFn(){
+            var lrdArr = [];
+            var lrdListRec = function (node){
+                if(node){
+                    lrdListRec(node.left);
+                    lrdListRec(node.right);
+                    if(node.data){
+                        lrdArr.push(node.data);
+                    }
+                }
+            }
+            lrdListRec(binaryTree);
+            return lrdArr;
+        }
+
+
+
+        /*前序遍历事件处理函数*/
+        function dlrTraverse(){
+            var dlrResult = dlrFn();
+            show(dlrResult);
+            if(counter < dlrResult.length){
+                setTimeout(function(){
+                    dlrTraverse();
+                },500);
+            } else{
+                counter = 0;
+                setTimeout(function(){
+                    alert("前序遍历完成!");
+                },1000);
+            }
+        }
+        /*中序遍历函数*/
+        function ldrTraverse(){
+            var ldrResult = ldrFn();
+            show(ldrResult);
+            if(counter < ldrResult.length){
+                setTimeout(function(){
+                    ldrTraverse();
+                },500);
+            } else{
+                counter = 0;
+                setTimeout(function(){
+                    alert("中序遍历完成!");
+                },1000);
+            }
+        }
+        /*后序遍历函数*/
+        function lrdTraverse(){
+            var lrdResult = lrdFn();
+            show(lrdResult);
+            if(counter < lrdResult.length){
+                setTimeout(function(){
+                    lrdTraverse();
+                },500);
+            } else{
+                counter = 0;
+                setTimeout(function(){
+                    alert("后序遍历完成!");
+                },1000);
+            }
+        }
+    </script>
+</body>
+</html>
