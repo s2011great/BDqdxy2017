@@ -172,6 +172,7 @@
         };
 
         var counter = 0;
+        var isStart = false;
 
         function show(nodeList){
             nodeList[counter].style.backgroundColor = "red";
@@ -180,6 +181,21 @@
             setTimeout(function(){
                 nodeList[num].style.backgroundColor = "#fff";
             },500);
+        }
+
+        function showFn(oResult){
+            show(oResult);
+            if(counter < oResult.length){
+                setTimeout(function(){
+                    showFn(oResult);
+                },500);
+            } else{
+                counter = 0;
+                isStart = false;
+                setTimeout(function(){
+                    alert("遍历完成！");
+                },1000);
+            }
         }
 
         /*二叉树前序遍历函数*/
@@ -234,47 +250,32 @@
 
         /*前序遍历事件处理函数*/
         function dlrTraverse(){
-            var dlrResult = dlrFn();
-            show(dlrResult);
-            if(counter < dlrResult.length){
-                setTimeout(function(){
-                    dlrTraverse();
-                },500);
+            if(!isStart){
+                var arr = dlrFn();
+                isStart = true;
+                showFn(arr);
             } else{
-                counter = 0;
-                setTimeout(function(){
-                    alert("前序遍历完成!");
-                },1000);
+                alert("遍历正在进行！");
             }
         }
         /*中序遍历事件处理函数*/
         function ldrTraverse(){
-            var ldrResult = ldrFn();
-            show(ldrResult);
-            if(counter < ldrResult.length){
-                setTimeout(function(){
-                    ldrTraverse();
-                },500);
+            if(!isStart){
+                var arr = ldrFn();
+                isStart = true;
+                showFn(arr);
             } else{
-                counter = 0;
-                setTimeout(function(){
-                    alert("中序遍历完成!");
-                },1000);
+                alert("遍历正在进行！");
             }
         }
         /*后序遍历事件处理函数*/
         function lrdTraverse(){
-            var lrdResult = lrdFn();
-            show(lrdResult);
-            if(counter < lrdResult.length){
-                setTimeout(function(){
-                    lrdTraverse();
-                },500);
+            if(!isStart){
+                var arr = lrdFn();
+                isStart = true;
+                showFn(arr);
             } else{
-                counter = 0;
-                setTimeout(function(){
-                    alert("后序遍历完成!");
-                },1000);
+                alert("遍历正在进行！");
             }
         }
     </script>
