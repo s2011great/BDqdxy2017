@@ -2,52 +2,51 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>百度前端学院斌斌学院Task7</title>
+    <title>百度前端学院斌斌学院Task8</title>
     <style type="text/css">
         *{
             margin: 0;
             padding: 0;
         }
-        .tree{
+        div{
             border: 1px solid #000;
             background-color: #fff;
         }
-        .div0{
-            width: 800px;
-            height: 120px;
+        .container{
             position: absolute;
-            top: 50%;
+            width: 1000px;
+            height: 120px;
             left: 50%;
+            top: 50%;
+            margin-left: -500px;
             margin-top: -100px;
-            margin-left: -400px;
+            border: none;
+        }
+        .tree1,.tree2,.tree3,.tree4{
             display: flex;
             justify-content: space-around;
             align-items: center;
-            z-index: 1;
         }
-        .div1{
-            width:380px;
+        .tree1{
+            width: 1000px;
+            height: 120px;
+        }
+        .tree2{
             height: 100px;
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            z-index: 10;
+            margin: 4px;
         }
-        .div2{
-            width: 170px;
+        .tree3{
             height: 80px;
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            z-index: 100;
+            margin: 4px;
         }
-        .div3{
-            width: 65px;
+        .tree4{
             height: 60px;
-            z-index: 1000;
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
+            margin: 4px;
+
+        }
+        .tree5{
+            height: 40px;
+            margin: 4px;
         }
         .btnBox{
             width: 600px;
@@ -76,101 +75,162 @@
 </head>
 <body>
     <div class="btnBox">
-        <button id="btnDLR" onclick="dlrTraverse()">前序遍历DLR</button>
-        <button id="btnLDR" onclick="ldrTraverse()">中序遍历LDR</button>
-        <button id="btnLRD" onclick="lrdTraverse()">后序遍历LRD</button>
+        <button id="btnDLR" onclick="reTraverse()">多叉树递归遍历</button>
+        <button id="btnLDR" onclick="brTraverse()">多叉树广度优先遍历</button>
+        <button id="btnLRD" onclick="deTraverse()">多叉树深度优先遍历</button>
     </div>
-    <div id="container">
-        <div class="tree div0">0
-            <div class="tree div1">1
-                <div class="tree div2">2
-                    <div class="tree div3">3</div>
-                    <div class="tree div3">4</div>
+    <div class="container">
+        <div class="tree1 tree">Super
+            <div class="tree2 tree">Car
+                <div class="tree3 tree">Apple
+                    <div class="tree4 tree">Poor</div>
+                    <div class="tree4 tree">Pig</div>
+                    <div class="tree4 tree">Cola</div>
+                    <div class="tree4 tree">Soccer</div>
                 </div>
-                <div class="tree div2">5
-                    <div class="tree div3">6</div>
-                    <div class="tree div3">7</div>
-                </div>
-            </div>
-            <div class="tree div1">8
-                <div class="tree div2">9
-                    <div class="tree div3">10</div>
-                    <div class="tree div3">11</div>
-                </div>
-                <div class="tree div2">12
-                    <div class="tree div3">13</div>
-                    <div class="tree div3">14</div>
+                <div class="tree3 tree">Phone</div>
+                <div class="tree3 tree">
+                    <div class="tree4 tree">Book</div>
+                    <div class="tree4 tree">School</div>
                 </div>
             </div>
+            <div class="tree2 tree">Note
+                <div class="tree3 tree">Human
+                    <div class="tree4 tree">Code</div>
+                    <div class="tree4 tree">Operate</div>
+                    <div class="tree4 tree">Mon</div>
+                </div>
+                <div class="tree3 tree">Progrom
+                    <div class="tree4 tree">Bement
+                        <div class="tree5 tree">Cat</div>
+                    </div>
+                    <div class="tree4 tree">Glass</div>
+                </div>
+            </div>
+            <div class="tree2 tree">Fish</div>
         </div>
     </div>
 
     <script type="text/javascript">
-        var container = document.getElementById("container");
         var tree = document.getElementsByClassName("tree");
 
-        var binaryTree = {
-            data: tree[0],
-            left: {
-                data: tree[1],
-                left: {
-                    data: tree[2],
-                    left: {
-                        data: tree[3],
-                        left: null,
-                        right: null
+        var binaryTree = [
+            {
+                data: tree[0],
+                text: "Super",
+                child: [
+                    {
+                        data: tree[1],
+                        text: "Car",
+                        child: [
+                            {
+                                data: tree[2],
+                                text: "Apple",
+                                child: [
+                                    {
+                                        data: tree[3],
+                                        text: "Poor",
+                                        child:[],
+                                    },
+                                    {
+                                        data: tree[4],
+                                        text: "Pig",
+                                        child: [],
+                                    },
+                                    {
+                                        data: tree[5],
+                                        text: "Cola",
+                                        child: [],
+                                    },
+                                    {
+                                        data: tree[6],
+                                        text: "Soccer",
+                                        child: [],
+                                    },
+                                ],
+                            },
+                            {
+                                data: tree[7],
+                                text: "Phone",
+                                child: [],
+                            },
+                            {
+                                data: tree[8],
+                                text: "",
+                                child: [
+                                    {
+                                        data: tree[9],
+                                        text: "Book",
+                                        child: [],
+                                    },
+                                    {
+                                        data: tree[10],
+                                        text: "School",
+                                        child: [],
+                                    },
+                                ],
+                            },
+                        ],
                     },
-                    right: {
-                        data: tree[4],
-                        left: null,
-                        right: null
-                    }
-                },
-                right: {
-                    data: tree[5],
-                    left: {
-                        data: tree[6],
-                        left: null,
-                        right: null
-                    },
-                    right: {
-                        data: tree[7],
-                        left: null,
-                        right: null
-                    }
-                }
-            },
-            right: {
-                data: tree[8],
-                left: {
-                    data: tree[9],
-                    left: {
-                        data: tree[10],
-                        left: null,
-                        right: null
-                    },
-                    right: {
+                    {
+                        
                         data: tree[11],
-                        left: null,
-                        right: null
-                    }
-                },
-                right: {
-                    data: tree[12],
-                    left: {
-                        data: tree[13],
-                        left: null,
-                        right: null
+                        text: "Note",
+                        child: [
+                            {
+                                data: tree[12],
+                                text: "Human",
+                                child: [
+                                    {
+                                        data: tree[13],
+                                        text: "Code",
+                                        child: [],
+                                    },
+                                    {
+                                        data: tree[14],
+                                        text: "Operate",
+                                        child: [],
+                                    },
+                                    {
+                                        data: tree[15],
+                                        text: "Mon",
+                                        child: [],
+                                    },
+                                ],
+                            },
+                            {
+                                data: tree[16],
+                                text: "Progrom",
+                                child: [
+                                    {
+                                        data: tree[17],
+                                        text: "Bement",
+                                        child: [
+                                            {
+                                                data: tree[18],
+                                                text: "Cat",
+                                                child: [],
+                                            }
+                                        ],
+                                    },
+                                    {
+                                        data: tree[19],
+                                        text: "Glass",
+                                        child: [],
+                                    },
+                                ],
+                            },
+                        ],
                     },
-                    right: {
-                        data: tree[14],
-                        left: null,
-                        right: null
-                    }
-                }
+                    {
+                        data: tree[20],
+                        text: "Fish",
+                        child: [],
+                    },
+                ],
             }
-        };
-
+        ];
+            
         var counter = 0;
         var isStart = false;
 
@@ -198,80 +258,82 @@
             }
         }
 
-        /*二叉树前序遍历函数*/
-        function dlrFn(){
-            var dlrArr = [];
-            var dlrListRec = function (node){
-                if(node){
-                    if(node.data){
-                        dlrArr.push(node.data);
-                    }
-                    dlrListRec(node.left);
-                    dlrListRec(node.right);
-                }
-            }
-            dlrListRec(binaryTree);
-            return dlrArr;
-        }
+        /*多叉树递归遍历函数*/
+        function reFn(){
+            var reArr = [];
+            var reListRec = function (node){
+                for (var i = 0, len = node.length; i < len; i++) {
+                    if(node[i].child == null)  break;
+                    reArr.push(node[i].data);
+                    var childs = node[i].child;
 
-        /*二叉树中序遍历函数*/
-        function ldrFn(){
-            var ldrArr = [];
-            var ldrListRec = function (node){
-                if(node){
-                    ldrListRec(node.left);
-                    if(node.data){
-                        ldrArr.push(node.data);
-                    }
-                    ldrListRec(node.right);
-                }
-            }
-            ldrListRec(binaryTree);
-            return ldrArr;
-        }
-
-        /*二叉树后序遍历函数*/
-        function lrdFn(){
-            var lrdArr = [];
-            var lrdListRec = function (node){
-                if(node){
-                    lrdListRec(node.left);
-                    lrdListRec(node.right);
-                    if(node.data){
-                        lrdArr.push(node.data);
+                    if(childs && childs.length > 0){
+                        reListRec(childs);
                     }
                 }
             }
-            lrdListRec(binaryTree);
-            return lrdArr;
+            reListRec(binaryTree);
+            return reArr;
+        }
+
+        /*多叉树广度优先遍历函数*/
+        function brFn(){
+            var brArr = [];
+            var brListRec = function (node){
+                if(node){
+                    brListRec(node.left);
+                    if(node.data){
+                        brArr.push(node.data);
+                    }
+                    brListRec(node.right);
+                }
+            }
+            brListRec(binaryTree);
+            return brArr;
+        }
+
+        /*多叉树深度优先遍历函数*/
+        function deFn(){
+            var deArr = [];
+            var deListRec = function (node){
+                if(node){
+                    deListRec(node.left);
+                    deListRec(node.right);
+                    if(node.data){
+                        deArr.push(node.data);
+                    }
+                }
+            }
+            deListRec(binaryTree);
+            return deArr;
         }
 
 
 
-        /*前序遍历事件处理函数*/
-        function dlrTraverse(){
+        /*递归遍历事件处理函数*/
+        function reTraverse(){
             if(!isStart){
-                var arr = dlrFn();
+                var arr = reFn();
                 isStart = true;
                 showFn(arr);
             } else{
                 alert("遍历正在进行！");
             }
         }
-        /*中序遍历事件处理函数*/
-        function ldrTraverse(){
+        /*广度优先遍历事件处理函数*/
+        function brTraverse(){
             if(!isStart){
-                var arr = ldrFn();
+                var arr = brFn();
                 isStart = true;
                 showFn(arr);
             } else{
                 alert("遍历正在进行！");
             }
         }
-        /*后序遍历事件处理函数*/
-        function lrdTraverse(){
+        /*深度优先遍历函数*/
+        function deTraverse(){
             if(!isStart){
-                var arr = lrdFn();
+                var arr = deFn();
                 isStart = true;
                 showFn(arr);
             } else{
