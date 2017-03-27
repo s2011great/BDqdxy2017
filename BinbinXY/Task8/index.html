@@ -71,13 +71,29 @@
         button:focus{
             outline: 0;
         }
+
+        .search-div{
+            border: none;
+            position: relative;
+            top: 40px;
+            width:300px;
+            height: 60px;
+            margin: 0 auto;
+        }
+        #search-btn{
+            width: 100px;
+            height: 40px;
+            background-color: #FFEA03;
+            border-radius: 10px;
+            color: #000;
+            font-size: 18px;
+        }
     </style>
 </head>
 <body>
     <div class="btnBox">
-        <button id="btnDLR" onclick="reTraverse()">多叉树递归遍历</button>
-        <button id="btnLDR" onclick="brTraverse()">多叉树广度优先遍历</button>
-        <button id="btnLRD" onclick="deTraverse()">多叉树深度优先遍历</button>
+        <button onclick="reTraverse()">深度优先遍历</button>
+        <button onclick="brTraverse()">广度优先遍历</button>
     </div>
     <div class="container">
         <div class="tree1 tree">Super
@@ -111,8 +127,14 @@
         </div>
     </div>
 
+    <div class="search-div">
+        <input type="text" name="search" id="search">
+        <button id="search-btn" onclick="treeSearch()">查询</button>
+    </div>
+
     <script type="text/javascript">
         var tree = document.getElementsByClassName("tree");
+        var search = document.getElementById("search");
 
         var binaryTree = [
             {
@@ -173,7 +195,7 @@
                         ],
                     },
                     {
-                        
+
                         data: tree[11],
                         text: "Note",
                         child: [
@@ -230,13 +252,18 @@
                 ],
             }
         ];
-            
+
+        var brTextArr = [];
+        var reTextArr = [];
+        var textNum = 0;
+
         var counter = 0;
         var isStart = false;
 
         function show(nodeList){
             nodeList[counter].style.backgroundColor = "red";
             var num = counter;
+            textNum = counter;
             counter++;
             setTimeout(function(){
                 nodeList[num].style.backgroundColor = "#fff";
@@ -258,13 +285,14 @@
             }
         }
 
-        /*多叉树递归遍历函数*/
+        /*多叉树深度优先遍历函数*/
         function reFn(){
             var reArr = [];
             var reListRec = function (node){
                 for (var i = 0, len = node.length; i < len; i++) {
                     if(node[i].child == null)  break;
                     reArr.push(node[i].data);
+                    reTextArr.push(node[i].text);
                     var childs = node[i].child;
 
                     if(childs && childs.length > 0){
@@ -280,37 +308,22 @@
         function brFn(){
             var brArr = [];
             var brListRec = function (node){
-                if(node){
-                    brListRec(node.left);
-                    if(node.data){
-                        brArr.push(node.data);
+                for(var i = 0, len = node.length; i < len; i++){
+                    brArr.push(node[i].data);
+                    brTextArr.push(node[i].text);
+                }
+                for(var j = 0, len = node.length; j < len; j++){
+                    var childs = node[j].child;
+                    if(childs && childs.length > 0){
+                        brListRec(childs);
                     }
-                    brListRec(node.right);
                 }
             }
             brListRec(binaryTree);
             return brArr;
         }
 
-        /*多叉树深度优先遍历函数*/
-        function deFn(){
-            var deArr = [];
-            var deListRec = function (node){
-                if(node){
-                    deListRec(node.left);
-                    deListRec(node.right);
-                    if(node.data){
-                        deArr.push(node.data);
-                    }
-                }
-            }
-            deListRec(binaryTree);
-            return deArr;
-        }
-
-
-
-        /*递归遍历事件处理函数*/
+        /*深度优先遍历事件处理函数*/
         function reTraverse(){
             if(!isStart){
                 var arr = reFn();
@@ -320,6 +333,7 @@
                 alert("遍历正在进行！");
             }
         }
+
         /*广度优先遍历事件处理函数*/
         function brTraverse(){
             if(!isStart){
@@ -330,14 +344,44 @@
                 alert("遍历正在进行！");
             }
         }
-        /*深度优先遍历函数*/
-        function deTraverse(){
-            if(!isStart){
-                var arr = deFn();
-                isStart = true;
-                showFn(arr);
+
+        /*查询函数*/
+        function searchFn(oResult,textResult){
+            show(oResult);
+            if(counter < oResult.length){
+                if(textResult[textNum] == search.value){
+                    setTimeout(function(){
+                        oResult[textNum].style.backgroundColor = "yellow";
+                        alert("查询成功！");
+                    },500);
+                    counter = 0;
+                    isStart = false;
+                    return;
+                }
+                textNum++;
+                setTimeout(function(){
+                    searchFn(oResult,textResult);
+                },500);
             } else{
-                alert("遍历正在进行！");
+                counter = 0;
+                isStart = false;
+                setTimeout(function(){
+                    alert("未查询到元素！");
+                },1000);
+            }
+        }
+
+
+        /*查询处理函数*/
+        function treeSearch(){
+             if(!isStart){
+                var arr = brFn();
+                arr[textNum].style.backgroundColor = "#fff";
+                textNum = 0
+                isStart = true;
+                searchFn(arr,brTextArr);
+            } else{
+                alert("查询正在进行！");
             }
         }
     </script>
