@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>百度前端学院斌斌学院Task9</title>
+    <style type="text/css">
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        div{
+            border: 1px solid #000;
+            background-color: #fff;
+        }
+        .container{
+            position: absolute;
+            width: 1000px;
+            height: 120px;
+            left: 50%;
+            top: 50%;
+            margin-left: -500px;
+            margin-top: -100px;
+            border: none;
+        }
+        .btnBox{
+            width: 600px;
+            height: 60px;
+            position: absolute;
+            top: 20%;
+            left: 50%;
+            margin-left: -300px;
+            border: none;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+        .btnBox button{
+            width: 180px;
+            height: 60px;
+            background-color: #FFEA03;
+            border-radius: 10px;
+            color: #000;
+            font-size: 24px;
+        }
+        button:focus{
+            outline: 0;
+        }
+
+        .operate-div{
+            border: none;
+            position: relative;
+            top: 30px;
+            width:520px;
+            height: 40px;
+            margin: 0 auto;
+        }
+        .operate-btn{
+            width: 100px;
+            height: 40px;
+            background-color: #FFEA03;
+            border-radius: 10px;
+            color: #000;
+            font-size: 18px;
+        }
+
+        .tree{
+            margin: 8px;
+            padding: 10px;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container"></div>
+
+    <div class="operate-div">
+        <input type="text" name="operateIn" id="operateIn">
+        <button class="operate-btn" onclick="nodeAdd()">添加</button>
+        <button class="operate-btn" onclick="nodeDelete()">删除</button>
+    </div>
+
+
+    <script type="text/javascript">
+        var container = document.getElementsByClassName("container");  //获取容器
+        var operateIn = document.getElementById("operateIn"); //获取输入
+        var currentNode = container[0]; //当前点击的节点，初始化为容器
+        var preNode;  //记录前一次的节点，用于清除点击时添加的background-color
+
+
+        /*删除事件处理函数*/
+        function nodeDelete(){
+            var node = currentNode;
+            node.parentNode.removeChild(node);
+        }
+
+        /*添加事件处理函数*/
+        function nodeAdd(){
+            var treeDiv = document.createElement('div');  //动态创建div元素
+            treeDiv.innerText = operateIn.value;   //为元素添加必要属性
+            treeDiv.className = "tree";
+            treeDiv.addEventListener('click',mouseClick,false); //为每一个元素添加点击事件
+            currentNode.appendChild(treeDiv);  //将此元素添加到，当前所点击的元素的最后一个子元素
+        }
+
+        /*元素点击事件处理函数*/
+        function mouseClick(e){
+            e.stopPropagation();   //阻止事件冒泡
+            if(preNode){   //当点击元素换了后，清除之前点击元素的background-color
+                preNode.style.backgroundColor = "#fff";
+            }
+            var node = this;  //被点击元素
+            node.style.backgroundColor = "yellow";
+            currentNode = node;
+            preNode = currentNode;
+        }
+    </script>
+</body>
+</html>
