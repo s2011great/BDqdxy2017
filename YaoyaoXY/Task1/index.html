@@ -3,8 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <title>百度前端学院耀耀学院Task1</title>
+    <style type="text/css">
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        form{
+            width: 800px;
+            height: 400px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-left: -400px;
+            margin-top: -200px;
+        }
+        .yanzheng{
+            margin: 10px;
+            border: none;
+            width: 100%;
+            font-size: 24px;
+        }
+        .yanzheng label, .yanzheng div, .btn{
+            float: left;
+            margin: 10px;
+        }
+        .yanzheng label{
+            width: 80px;
+        }
+        .yanzheng div{
+            width: 400px;
+        }
+        .yanzheng div input{
+            width: 400px;
+            height: 40px;
+            border-color:#BEBBBB;
+            border-radius: 10px;
+        }
+        .yanzheng div p{
+            font-size: 18px;
+            color:#C4C2C2;
+        }
+        .btn{
+            width: 80px;
+            height: 40px;
+            background-color:#254A94;
+            border-radius: 10px;
+            color: #fff;
+        }
+    </style>
 </head>
 <body>
-
+    <div class="container">
+        <form method="POST">
+            <fieldset class="yanzheng">
+                <label>名称</label>
+                <div>
+                    <input type="text" name="input1">
+                    <p>必填，长度为4~16个字符</p>
+                </div>
+                <input type="submit" name="yanzheng1" value="验证" class="btn">
+            </fieldset>
+            <fieldset class="yanzheng">
+                <label>名称</label>
+                <div>
+                    <input type="text" name="input2">
+                    <p>必填，每个英文字母、数字、英文符号长度为1</p>
+                </div>
+                <input type="submit" name="yanzheng2" value="验证" class="btn">
+            </fieldset>
+            <fieldset class="yanzheng">
+                <label>名称</label>
+                <div>
+                    <input type="text" name="input3">
+                    <p>必填，每个汉字，中文符号长度为2</p>
+                </div>
+                <input type="submit" name="yanzheng3" value="验证" class="btn">
+            </fieldset>
+        </form>
+    </div>
 </body>
 </html>
