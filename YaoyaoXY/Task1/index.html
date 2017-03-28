@@ -117,7 +117,7 @@
      form[1].addEventListener("submit",function(event){
         var input2 = document.getElementById("input2");
         var errorMes2 = document.getElementById("errorMes2");
-        if(!/[A-Za-z]{1,}|[0-9]{1,}/.test(input2.value)){
+        if(!/([a-z]+)([0-9]+)/i.test(input2.value)){
             errorMes2.innerText = "请填写每个英文字母、数字、英文符号长度为1";
             errorMes2.style.color = "red";
             input2.style.borderColor = "red";
@@ -131,16 +131,16 @@
 
       /*每个汉字，中文符号长度为2*/
      form[2].addEventListener("submit",function(event){
-        var input1 = document.getElementById("input1");
-        var errorMes1 = document.getElementById("errorMes1");
-        if(!/\S{4,16}/.test(input1.value)){
-            errorMes1.innerText = "请填写长度为4~16的字符";
-            errorMes1.style.color = "red";
-            input1.style.borderColor = "red";
+        var input3 = document.getElementById("input3");
+        var errorMes3 = document.getElementById("errorMes3");
+        if(!/[\u4E00-\u9FA5]{2,}/.test(input3.value)){
+            errorMes3.innerText = "请填写每个汉字，中文符号长度为2";
+            errorMes3.style.color = "red";
+            input3.style.borderColor = "red";
         }else{
-            errorMes1.innerText = "内容符合要求";
-            errorMes1.style.color = "green";
-            input1.style.borderColor = "green";
+            errorMes3.innerText = "内容符合要求";
+            errorMes3.style.color = "green";
+            input3.style.borderColor = "green";
         }
      },false);
 </script>
