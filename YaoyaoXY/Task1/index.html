@@ -8,7 +8,7 @@
             margin: 0;
             padding: 0;
         }
-        form{
+        .container{
             width: 800px;
             height: 400px;
             position: absolute;
@@ -17,11 +17,17 @@
             margin-left: -400px;
             margin-top: -200px;
         }
+        .container form{
+            margin: 20px;
+        }
         .yanzheng{
             margin: 10px;
             border: none;
             width: 100%;
             font-size: 24px;
+        }
+        .yanzheng input{
+            outline: none;
         }
         .yanzheng label, .yanzheng div, .btn{
             float: left;
@@ -38,6 +44,7 @@
             height: 40px;
             border-color:#BEBBBB;
             border-radius: 10px;
+            font-size: 20px;
         }
         .yanzheng div p{
             font-size: 18px;
@@ -54,32 +61,87 @@
 </head>
 <body>
     <div class="container">
-        <form method="POST">
+        <form method="POST" novalidate target="nm_iframe">
             <fieldset class="yanzheng">
-                <label>名称</label>
+                <label for="input1">名称</label>
                 <div>
-                    <input type="text" name="input1">
-                    <p>必填，长度为4~16个字符</p>
+                    <input type="text" name="input1" id="input1">
+                    <p id="errorMes1">必填，长度为4~16个字符</p>
                 </div>
                 <input type="submit" name="yanzheng1" value="验证" class="btn">
             </fieldset>
+        </form>
+        <form method="POST" novalidate target="nm_iframe">
             <fieldset class="yanzheng">
-                <label>名称</label>
+                <label for="input2">名称</label>
                 <div>
-                    <input type="text" name="input2">
-                    <p>必填，每个英文字母、数字、英文符号长度为1</p>
+                    <input type="text" name="input2" id="input2">
+                    <p id="errorMes2">必填，每个英文字母、数字、英文符号长度为1</p>
                 </div>
                 <input type="submit" name="yanzheng2" value="验证" class="btn">
             </fieldset>
+        </form>
+        <form method="POST" novalidate target="nm_iframe">
             <fieldset class="yanzheng">
-                <label>名称</label>
+                <label for="input3">名称</label>
                 <div>
-                    <input type="text" name="input3">
-                    <p>必填，每个汉字，中文符号长度为2</p>
+                    <input type="text" name="input3" id="input3">
+                    <p id="errorMes3">必填，每个汉字，中文符号长度为2</p>
                 </div>
                 <input type="submit" name="yanzheng3" value="验证" class="btn">
             </fieldset>
         </form>
+
+        <iframe id="id_iframe" name="nm_iframe" style="display:none;"></iframe>
     </div>
 </body>
+
+<script type="text/javascript">
+    var form = document.getElementsByTagName("form");
+    /*长度为4~16个字符*/
+     form[0].addEventListener("submit",function(event){
+        var input1 = document.getElementById("input1");
+        var errorMes1 = document.getElementById("errorMes1");
+        if(!/\S{4,16}/.test(input1.value)){
+            errorMes1.innerText = "请填写长度为4~16的字符";
+            errorMes1.style.color = "red";
+            input1.style.borderColor = "red";
+        }else{
+            errorMes1.innerText = "内容符合要求";
+            errorMes1.style.color = "green";
+            input1.style.borderColor = "green";
+        }
+     },false);
+
+      /*每个英文字母、数字、英文符号长度为1*/
+     form[1].addEventListener("submit",function(event){
+        var input2 = document.getElementById("input2");
+        var errorMes2 = document.getElementById("errorMes2");
+        if(!/[A-Za-z]{1,}|[0-9]{1,}/.test(input2.value)){
+            errorMes2.innerText = "请填写每个英文字母、数字、英文符号长度为1";
+            errorMes2.style.color = "red";
+            input2.style.borderColor = "red";
+        }else{
+            errorMes2.innerText = "内容符合要求";
+            errorMes2.style.color = "green";
+            input2.style.borderColor = "green";
+        }
+     },false);
+
+
+      /*每个汉字，中文符号长度为2*/
+     form[2].addEventListener("submit",function(event){
+        var input1 = document.getElementById("input1");
+        var errorMes1 = document.getElementById("errorMes1");
+        if(!/\S{4,16}/.test(input1.value)){
+            errorMes1.innerText = "请填写长度为4~16的字符";
+            errorMes1.style.color = "red";
+            input1.style.borderColor = "red";
+        }else{
+            errorMes1.innerText = "内容符合要求";
+            errorMes1.style.color = "green";
+            input1.style.borderColor = "green";
+        }
+     },false);
+</script>
 </html>
