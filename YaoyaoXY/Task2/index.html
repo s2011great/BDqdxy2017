@@ -52,52 +52,86 @@
             font-size: 18px;
             float: right;
         }
+        .container fieldset div input:focus +p{
+            visibility: visible;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <form method="POST">
+        <form method="POST" novalidate target="nm_iframe">
             <fieldset class="formGroup">
                 <label>名称</label>
                 <div>
                     <input type="text" name="designation" id="name">
-                    <p>必填，长度为4~16个字符</p>
+                    <p id="nameMes">必填，长度为4~16个字符</p>
                 </div>
             </fieldset>
             <fieldset class="formGroup">
                 <label>密码</label>
                 <div>
                     <input type="password" name="password" id="psw">
-                    <p></p>
+                    <p id="pswMes">必填，长度为4~16个数字或者字符</p>
                 </div>
             </fieldset>
             <fieldset class="formGroup">
                 <label>密码确认</label>
                 <div>
                     <input type="password" name="password" id="conPsw">
-                    <p></p>
+                    <p id="conPswMes">必填，请再次填写密码</p>
                 </div>
             </fieldset>
             <fieldset class="formGroup">
                 <label>邮箱</label>
                 <div>
                     <input type="email" name="email" id="email">
-                    <p></p>
+                    <p id="emailMes">必填，请填写您的邮箱</p>
                 </div>
             </fieldset>
             <fieldset class="formGroup">
                 <label>手机</label>
                 <div>
                     <input type="number" name="phoneNum" id="phone">
-                    <p></p>
+                    <p id="phoneMes">必填，请填写您的手机</p>
                 </div>
             </fieldset>
             <input type="submit" name="submit" id="submit">
         </form>
+
+        <iframe id="id_iframe" name="nm_iframe" style="display:none;"></iframe>
     </div>
 
     <script type="text/javascript">
+        /*name检查函数*/
+        function nameCheck(){
+            var name = document.getElementById('name');
+            var nameMes = document.getElementById('nameMes');
+            if(name.value){
+                if(!/\S{4,16}/.test(name.value)){
+                    name.style.borderColor = "red";
+                    nameMes.style.visibility = "visible";
+                    nameMes.style.color = "red";
+                    nameMes.innerText = "请填写长度为4~16的字符";
+                }else{
+                    name.style.borderColor = "green";
+                    nameMes.style.visibility = "visible";
+                    nameMes.style.color = "green";
+                    nameMes.innerText = "内容符合要求";
+                }
+            }else{
+                name.style.borderColor = "red";
+                nameMes.style.visibility = "visible";
+                nameMes.style.color = "red";
+                nameMes.innerText = "名称不能为空";
+            }
+        }
 
+
+        /*提交事件处理函数*/
+        var form = document.getElementsByTagName('form');
+        form[0].addEventListener('submit',function(){
+            nameCheck();
+        },false);
     </script>
 </body>
 </html>
