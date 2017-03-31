@@ -126,11 +126,114 @@
             }
         }
 
+         /*password检查函数*/
+        function pswCheck(){
+            var psw = document.getElementById('psw');
+            var pswMes = document.getElementById('pswMes');
+            if(psw.value){
+                if(!/(\S|[0-9]){4,16}/.test(psw.value)){
+                    psw.style.borderColor = "red";
+                    pswMes.style.visibility = "visible";
+                    pswMes.style.color = "red";
+                    pswMes.innerText = "请填写长度为4~16的数字、字符";
+                }else{
+                    psw.style.borderColor = "green";
+                    pswMes.style.visibility = "visible";
+                    pswMes.style.color = "green";
+                    pswMes.innerText = "内容符合要求";
+                }
+            }else{
+                psw.style.borderColor = "red";
+                pswMes.style.visibility = "visible";
+                pswMes.style.color = "red";
+                pswMes.innerText = "密码不能为空";
+            }
+        }
+
+
+         /*conPsw检查函数*/
+        function conPswCheck(){
+            var conPsw = document.getElementById('conPsw');
+            var psw = document.getElementById('psw');
+            var conPswMes = document.getElementById('conPswMes');
+            if(conPsw.value){
+                if(conPsw.value != psw.value){
+                    conPsw.style.borderColor = "red";
+                    conPswMes.style.visibility = "visible";
+                    conPswMes.style.color = "red";
+                    conPswMes.innerText = "请与密码填写一致";
+                }else{
+                    conPsw.style.borderColor = "green";
+                    conPswMes.style.visibility = "visible";
+                    conPswMes.style.color = "green";
+                    conPswMes.innerText = "内容符合要求";
+                }
+            }else{
+                conPsw.style.borderColor = "red";
+                conPswMes.style.visibility = "visible";
+                conPswMes.style.color = "red";
+                conPswMes.innerText = "密码不能为空";
+            }
+        }
+
+         /*email检查函数*/
+        function emailCheck(){
+            var email = document.getElementById('email');
+            var emailMes = document.getElementById('emailMes');
+            if(email.value){
+                if(!/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$/.test(email.value)){
+                    email.style.borderColor = "red";
+                    emailMes.style.visibility = "visible";
+                    emailMes.style.color = "red";
+                    emailMes.innerText = "请填写正确的邮箱地址";
+                }else{
+                    email.style.borderColor = "green";
+                    emailMes.style.visibility = "visible";
+                    emailMes.style.color = "green";
+                    emailMes.innerText = "内容符合要求";
+                }
+            }else{
+                email.style.borderColor = "red";
+                emailMes.style.visibility = "visible";
+                emailMes.style.color = "red";
+                emailMes.innerText = "邮箱地址不能为空";
+            }
+        }
+
+
+        /*phone检查函数*/
+        function phoneCheck(){
+            var phone = document.getElementById('phone');
+            var phoneMes = document.getElementById('phoneMes');
+            if(phone.value){
+                if(!/^1[0-9]{10}$/.test(phone.value)){
+                    phone.style.borderColor = "red";
+                    phoneMes.style.visibility = "visible";
+                    phoneMes.style.color = "red";
+                    phoneMes.innerText = "请填写正确的手机号码";
+                }else{
+                    phone.style.borderColor = "green";
+                    phoneMes.style.visibility = "visible";
+                    phoneMes.style.color = "green";
+                    phoneMes.innerText = "内容符合要求";
+                }
+            }else{
+                phone.style.borderColor = "red";
+                phoneMes.style.visibility = "visible";
+                phoneMes.style.color = "red";
+                phoneMes.innerText = "手机号码不能为空";
+            }
+        }
+
 
         /*提交事件处理函数*/
         var form = document.getElementsByTagName('form');
         form[0].addEventListener('submit',function(){
             nameCheck();
+            pswCheck();
+            conPswCheck();
+            emailCheck();
+            phoneCheck();
         },false);
     </script>
 </body>
