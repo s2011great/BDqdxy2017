@@ -8,6 +8,7 @@
             margin: 0;
             padding: 0;
         }
+        /**表格样式**/
         .container{
             position: absolute;
             width: 511px;
@@ -26,6 +27,8 @@
             height: 50px;
             border: 1px solid #ccc;
         }
+
+        /*小方格样式*/
         #littleBox{
             width: 50px;
             height: 50px;
@@ -38,6 +41,7 @@
             background-color: blue;
         }
 
+        /*操作按钮样式*/
         .action{
             position: absolute;
             width: 500px;
@@ -47,9 +51,11 @@
             margin-top: 150px;
             margin-left: -250px;
         }
+        /*chorme浏览器中去除按钮点击时的蓝色边框*/
         .action button{
             outline: none;
         }
+        /*GO按钮*/
         #go{
             position: absolute;
             width: 80px;
@@ -58,6 +64,7 @@
             border-radius: 40px;
             right: 0;
         }
+        /*TUN LEF按钮*/
         #left{
             position: absolute;
             width: 80px;
@@ -67,6 +74,7 @@
             left: 10px;
             top: 10px;
         }
+        /*TUN RIG按钮*/
         #right{
             position: absolute;
             width: 80px;
@@ -76,6 +84,7 @@
             left: 170px;
             top: 10px;
         }
+        /*TUN BAC按钮*/
         #back{
             position: absolute;
             width: 80px;
@@ -222,70 +231,74 @@
 
 
     <script type="text/javascript">
+        /*获取元素*/
         var box = document.getElementById('littleBox');
-        var stepNum = 51;
-        var direction = 1;
         var go = document.getElementById('go');
         var left = document.getElementById('left');
         var right = document.getElementById('right');
         var back = document.getElementById('back');
-        var initDeg = 0;
+
+
+        var initDeg = 0;  //旋转角度的初始值。
+        var stepNum = 51;  //每步移动的距离
+        var direction = 1;  //方向的初始值。1：向上；2：向右；3：向下；4：向左
 
         /*一步加减函数，modified为true则加，modified为false则减；direction为littleBox的方向状态记录*/
         function stepByStep(modified){
             if(modified){
-                if(direction == 4){
+                if(direction == 4){  //当为4时，再加1等于1.即做一个环形方向，只在1-4中取值。
                     direction = 1;
                 } else {
-                    ++direction;
+                    ++direction;    //向右为加
                 }
             } else{
-                if(direction == 1){
+                if(direction == 1){  //当为1时，再减1等于4.即做一个环形方向，只在1-4中取值。
                     direction = 4;
                 } else {
-                    --direction;
+                    --direction;  //向左为减
                 }
             }
-
-            return direction;
         }
 
+        /*向左旋转点击事件处理函数*/
         left.addEventListener("click",function(){
-            initDeg = parseInt(initDeg,10) - 90 + "deg";
-            box.style.transform = "rotate(" + initDeg + ")";
-            stepByStep(false);
+            initDeg = parseInt(initDeg,10) - 90 + "deg";  //计算需要旋转的角度
+            box.style.transform = "rotate(" + initDeg + ")";  //CSS3 transform ： rotate(deg);
+            stepByStep(false);  //角度旋转完成后，更新方向状态
         },false);
 
+        /*向右旋转点击事件处理函数*/
         right.addEventListener("click",function(){
-            initDeg = parseInt(initDeg,10) + 90 + "deg";
-            box.style.transform = "rotate(" + initDeg + ")";
-            stepByStep(true);
+            initDeg = parseInt(initDeg,10) + 90 + "deg";  //计算需要旋转的角度
+            box.style.transform = "rotate(" + initDeg + ")";  //CSS3 transform ： rotate(deg);
+            stepByStep(true);  //角度旋转完成后，更新方向状态
         },false);
 
+        /*向后旋转点击事件处理函数*/
         back.addEventListener("click",function(){
-            initDeg = parseInt(initDeg,10) + 180 + "deg";
-            box.style.transform = "rotate(" + initDeg + ")";
-            stepByStep(true);
-            stepByStep(true);
+            initDeg = parseInt(initDeg,10) + 180 + "deg";  //计算需要旋转的角度
+            box.style.transform = "rotate(" + initDeg + ")";  //CSS3 transform ： rotate(deg);
+            stepByStep(true);  //角度旋转完成后，更新方向状态
+            stepByStep(true);  //需要一步一步计算
         },false);
 
-
+        /*前进一步点击事件处理函数*/
         go.addEventListener("click",function(){
-            var topOrLeft;
-            if(direction == 1 || direction == 3){
+            var topOrLeft;  //当前方向字符串
+            if(direction == 1 || direction == 3){  //方向状态为1或3时，方向字符串为“top”
                 topOrLeft = "top";
-            } else if(direction == 2 || direction == 4){
+            } else if(direction == 2 || direction == 4){  //方向状态为3或4时，方向字符串为“left”
                 topOrLeft = "left";
             }
-            var boxDrift = parseInt(box.style[topOrLeft],10);
-            if(direction == 1 || direction == 4){
-               if(boxDrift > 1){
+            var boxDrift = parseInt(box.style[topOrLeft],10);  //获取小格子当前所在方向的值，小格子的left、top为行内元素才能获取并赋值
+            if(direction == 1 || direction == 4){  //方向状态为1和4时，在对应方向需减一步移动的px值
+               if(boxDrift > 1){  //判断是否超出边界
                     box.style[topOrLeft] = boxDrift - stepNum + "px";
                 } else{
                     alert("停止前进！");
                 }
-            } else if(direction == 2 || direction == 3){
-                if(boxDrift <460){
+            } else if(direction == 2 || direction == 3){  //方向状态为2和3时，在对应方向需加一步移动的px值
+                if(boxDrift <460){  //判断是否超出边界
                     box.style[topOrLeft] = boxDrift + stepNum + "px";
                 } else{
                     alert("停止前进！");
