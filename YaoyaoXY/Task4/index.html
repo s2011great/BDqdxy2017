@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>百度前端学院耀耀学院Task4</title>
+    <style type="text/css">
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .container{
+            position: absolute;
+            width: 511px;
+            height: 511px;
+            top: 50%;
+            left: 50%;
+            margin-top: -400px;
+            margin-left: -255px;
+            border: 1px solid #000;
+        }
+        .container table{
+            border-collapse:collapse;
+        }
+        .container table td{
+            width: 50px;
+            height: 50px;
+            border: 1px solid #ccc;
+        }
+        #littleBox{
+            width: 50px;
+            height: 50px;
+            background-color: red;
+            position: absolute;
+        }
+        #littleBox #head{
+            width: 50px;
+            height: 20px;
+            background-color: blue;
+        }
+
+        .action{
+            position: absolute;
+            width: 500px;
+            height: 100px;
+            top: 50%;
+            left: 50%;
+            margin-top: 150px;
+            margin-left: -250px;
+        }
+        .action button{
+            outline: none;
+        }
+        #go{
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            background-color: #1BEE6F;
+            border-radius: 40px;
+            right: 0;
+        }
+        #left{
+            position: absolute;
+            width: 80px;
+            height: 40px;
+            background-color: #346BC5;
+            border-radius: 8px;
+            left: 10px;
+            top: 10px;
+        }
+        #right{
+            position: absolute;
+            width: 80px;
+            height: 40px;
+            background-color: #346BC5;
+            border-radius: 8px;
+            left: 170px;
+            top: 10px;
+        }
+        #back{
+            position: absolute;
+            width: 80px;
+            height: 40px;
+            background-color: #346BC5;
+            border-radius: 8px;
+            left: 90px;
+            top: 60px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <table>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><div id="littleBox" style="left: 256px;top: 256px;"><div id="head"></div></div></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="action">
+        <button id="left">TUN LEF</button>
+        <button id="right">TUN RIG</button>
+        <button id="back">TUN BAC</button>
+        <button id="go">GO</button>
+    </div>
+
+
+    <script type="text/javascript">
+        var box = document.getElementById('littleBox');
+        var stepNum = 51;
+        var direction = 1;
+        var go = document.getElementById('go');
+        var left = document.getElementById('left');
+        var right = document.getElementById('right');
+        var back = document.getElementById('back');
+        var initDeg = 0;
+
+        /*一步加减函数，modified为true则加，modified为false则减；direction为littleBox的方向状态记录*/
+        function stepByStep(modified){
+            if(modified){
+                if(direction == 4){
+                    direction = 1;
+                } else {
+                    ++direction;
+                }
+            } else{
+                if(direction == 1){
+                    direction = 4;
+                } else {
+                    --direction;
+                }
+            }
+
+            return direction;
+        }
+
+        left.addEventListener("click",function(){
+            initDeg = parseInt(initDeg,10) - 90 + "deg";
+            box.style.transform = "rotate(" + initDeg + ")";
+            stepByStep(false);
+        },false);
+
+        right.addEventListener("click",function(){
+            initDeg = parseInt(initDeg,10) + 90 + "deg";
+            box.style.transform = "rotate(" + initDeg + ")";
+            stepByStep(true);
+        },false);
+
+        back.addEventListener("click",function(){
+            initDeg = parseInt(initDeg,10) + 180 + "deg";
+            box.style.transform = "rotate(" + initDeg + ")";
+            stepByStep(true);
+            stepByStep(true);
+        },false);
+
+
+        go.addEventListener("click",function(){
+            var topOrLeft;
+            if(direction == 1 || direction == 3){
+                topOrLeft = "top";
+            } else if(direction == 2 || direction == 4){
+                topOrLeft = "left";
+            }
+            var boxDrift = parseInt(box.style[topOrLeft],10);
+            if(direction == 1 || direction == 4){
+               if(boxDrift > 1){
+                    box.style[topOrLeft] = boxDrift - stepNum + "px";
+                } else{
+                    alert("停止前进！");
+                }
+            } else if(direction == 2 || direction == 3){
+                if(boxDrift <460){
+                    box.style[topOrLeft] = boxDrift + stepNum + "px";
+                } else{
+                    alert("停止前进！");
+                }
+            }
+        },false);
+    </script>
+</body>
+</html>
