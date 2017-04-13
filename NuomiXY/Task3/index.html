@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>百度前端学院糯米学院动态数据绑定（二）</title>
+</head>
+<body>
+    <h1>请在控制台输入 app.data 查看效果</h1>
+    <p>可检查app.data.user / app.data.address / app.data.user.name ...</p>
+    <p>
+        let data = {
+            user : {
+                name : "shanglibo",
+                age : 24
+            },
+            address : {
+                city : "tianjin"
+            }
+        };
+
+        let app =new Observe(data);
+    </p>
+    <script type="text/javascript">
+
+        //观察者构造函数
+        function Observe(data){
+            this.data = data;
+            this.walk(data);  //遍历函数
+        }
+
+        let p = Observe.prototype;
+
+        //用于深层次遍历对象的各个属性
+        p.walk = function(obj){
+            let val;
+            for(let key in obj){
+                //只对对象本身的属性进行遍历，所以需要用hasOwnProperty进行过滤
+                if(obj.hasOwnProperty(key)){
+                    val = obj[key];
+
+                    //如果val还不是最底层，这继续遍历
+                    if(typeof val === 'object'){
+                        new Observe(val);
+                    }
+
+                    this.convert(key, val);
+                }
+            }
+        };
+
+        //为对象添加get、set属性描述符
+        p.convert = function(key, val){
+            Object.defineProperty(this.data, key, {
+                //公共属性描述符
+                enumerable : true,
+                configurable : true,
+                //存取描述符
+                get : function(){
+                    console.log('你访问了' + key);
+                    return val;
+                },
+                set : function(newVal){
+                    //如果newval是对象的话
+                    if(typeof newVal === 'object'){
+                        new Observe(val);
+                    }
+                    console.log('你设置了' + key);
+                    console.log('新的' + key + ' = ' + newVal);
+                    if(newVal === val) return;
+                    val = newVal;
+                }
+            });
+        };
+
+        let data = {
+            user : {
+                name : "shanglibo",
+                age : 24
+            },
+            address : {
+                city : "tianjin"
+            }
+        };
+
+        let app =new Observe(data);
+    </script>
+</body>
+</html>
