@@ -21,11 +21,43 @@
         let app =new Observe(data);
     </p>
     <script type="text/javascript">
+        /*事件的实现*/
+        //实现一个事件
+        function Event(){
+            this.events = {};
+        }
 
+        //监听事件
+        Event.prototype.on = function(attr, callback){
+            if(this.events[attr]){
+                this.events[attr].push(callback);
+            }else{
+                this.events[attr] = [callback];
+            }
+        };
+
+        //移除事件
+        Event.prototype.off = function(attr){
+            for(let key in this.events){
+                if(this.events.hasOwnProperty(key) && key === attr){
+                    delete this.events[key];
+                }
+            }
+        };
+
+        //触发事件
+        Event.prototype.emit = function(attr, ...arg){
+            this.events[attr] && this.events[attr].forEach(function(item){
+                item(...arg);
+            });
+        };
+
+        var _event = new Event();  //单独new一个事件的实例，每次new Observe(val);时都为这个_event事件实例.
         //观察者构造函数
         function Observe(data){
             this.data = data;
             this.walk(data);  //遍历函数
+            this.eventsBus = _event;
         }
 
         let p = Observe.prototype;
@@ -50,6 +82,7 @@
 
         //为对象添加get、set属性描述符
         p.convert = function(key, val){
+            let _this = this;
             Object.defineProperty(this.data, key, {
                 //公共属性描述符
                 enumerable : true,
@@ -60,17 +93,24 @@
                     return val;
                 },
                 set : function(newVal){
-                    //如果newval是对象的话
+                    console.log('你设置了' + key);
+                    console.log('新的' + key + ' = ' + newVal);
+                    //触发$watch监听函数
+                    _this.eventsBus.emit(key, val, newVal);
+                    if(newVal === val) return;
+                    val = newVal;
+
+                    //如果setter的newval是对象的话
                     if(typeof newVal === 'object'){
                         new Observe(val);
                     }
-                    console.log('你设置了' + key);
-                    console.log('新的' + key + ' = ' + newVal);
-                    if(newVal === val) return;
-                    val = newVal;
                 }
             });
         };
+
+        Observe.prototype.$watch = function(attr, callback){
+            this.eventsBus.on(attr, callback);
+        }
 
         let data = {
             user : {
@@ -83,6 +123,16 @@
         };
 
         let app =new Observe(data);
+
+        app.$watch('age', function(oldVal, newVal){
+            console.log(`我的年龄变了，原来是: ${oldVal}岁，现在是：${newVal}岁了`);
+        })
+
+        app.$watch('age', function(oldVal, newVal){
+            console.log(`我的年龄真的变了诶，竟然年轻了${oldVal - newVal}岁`);
+        })
+
+        app.data.user.age = 20;
     </script>
 </body>
 </html>
