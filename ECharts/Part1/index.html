@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ECharts PART1</title>
+    <script type="text/javascript" src="../echarts.min.js"></script>
+</head>
+<body>
+    <div id="container" style="width: 800px; height: 600px;"></div>
+    <script type="text/javascript">
+        var myChart = echarts.init(document.getElementById('container'));
+
+        var option = {
+            title: {
+                text: 'ECharts part1'
+            },
+            tooltip: {
+                trigger: 'axis'
+            },
+            toolbox: {
+                feature: {
+                    dataView: {
+                        show: true,
+                        readOnly: false
+                    }
+                }
+            },
+            legend: {
+                data: ['销量','单价']
+            },
+            xAxis: {
+                data: ["衬衫","羊毛衫","雪纺衫","裤子","高跟鞋","袜子"]
+            },
+            yAxis : [{
+                type: 'value',
+                name: '数量',
+                min: 0,
+                max: 50,
+                interval: 10,
+            },
+            {
+                type: 'value',
+                name: '售价',
+                min: 0,
+                max: 1000,
+                interval: 200,
+            }
+            ],
+            series: [
+                {
+                    name: '销量',
+                    type: 'bar',
+                    data: [5, 20, 36, 10, 10, 20]
+                },
+                {
+                    name: '单价',
+                    type: 'line',
+                    yAxisIndex: 1,
+                    data: [250, 400, 620, 499, 700, 26]
+                }
+            ]
+        };
+        myChart.setOption(option);
+    </script>
+</body>
+</html>
