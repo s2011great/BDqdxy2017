@@ -1,250 +1,253 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>ECharts PART2</title>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/echarts/3.5.4/echarts.min.js"></script>
 </head>
+
 <body>
     <div id="myEcharts" style="width: 800px; height: 600px;"></div>
     <script type="text/javascript">
-var data = [],
-    datas = [],
-    j = 0,
-    categoryData = [],
-    values = [],
-    Volume = [];
-/*获取数据*/
-var xhr = null;
-if (XMLHttpRequest) {
-    xhr = new XMLHttpRequest()  //初始化XMLHttpRequext对象
-} else {
-    xhr = new ActiveXObject("Microsoft.XMLHTTP")
-}
-xhr.open("get", "./alldata.json", true);  //初始化一个请求. 该方法用于JavaScript代码中;如果是本地代码, 使用 openRequest()方法代替.在线用open()。
-xhr.onreadystatechange = function() {  //监听事件
-    if (xhr.readyState == 4) {
-        if (xhr.status == 200) {
-            data = xhr.responseText;  //返回字符串
-            data = eval("(" + data + ")");  //eval("(" + data +")")加括号data字符串转换为JSON数据。
-            for (var i = 0; i < data.length; i++) {
-                if (data[i].Ticker == "A") {
-                    /***************得到数据******************/
-                    categoryData.push(data[i].Date.replace(/(\d{4})(\d{2})(\d{2})/, '$1-$2-$3'));
-                    values[j] = [];
-                    values[j].push(parseFloat(data[i].Open))
-                    values[j].push(parseFloat(data[i].High))
-                    values[j].push(parseFloat(data[i].Low))
-                    values[j].push(parseFloat(data[i].Close))
-                    Volume.push(parseFloat(data[i].Volume))
-                    j++;
+        var data = [],
+            datas = [],
+            j = 0,
+            categoryData = [],
+            values = [],
+            Volume = [];
+        /*获取数据*/
+        var xhr = null;
+        if (XMLHttpRequest) {
+            xhr = new XMLHttpRequest() //初始化XMLHttpRequext对象
+        } else {
+            xhr = new ActiveXObject("Microsoft.XMLHTTP")
+        }
+        xhr.open("get", "./alldata.json", true); //初始化一个请求. 该方法用于JavaScript代码中;如果是本地代码, 使用 openRequest()方法代替.在线用open()。
+        xhr.onreadystatechange = function() { //监听事件
+            if (xhr.readyState == 4) {
+                if (xhr.status >= 200 && xhr.status < 300) {
+                    data = xhr.responseText; //返回字符串
+                    data = eval("(" + data + ")"); //eval("(" + data +")")加括号data字符串转换为JSON数据。和JSON.parse一样的效果
+                    for (var i = 0; i < data.length; i++) {
+                        if (data[i].Ticker == "A") {
+                            /***************得到数据******************/
+                            categoryData.push(data[i].Date.replace(/(\d{4})(\d{2})(\d{2})/, '$1-$2-$3'));
+                            values[j] = [];
+                            values[j].push(parseFloat(data[i].Open))
+                            values[j].push(parseFloat(data[i].High))
+                            values[j].push(parseFloat(data[i].Low))
+                            values[j].push(parseFloat(data[i].Close))
+                            Volume.push(parseFloat(data[i].Volume))
+                            j++;
+                        }
+                    }
+                    datas = {
+                        categoryData: categoryData,
+                        values: values,
+                        Volume: Volume
+                    }
+                    console.log(datas)
+                        /*********************渲染************************/
+                    var myEcharts = echarts.init(document.getElementById('myEcharts'));
+                    var option = {
+                        backgroundColor: '#eee', //背景色
+                        animation: false, //是否开启动画
+                        legend: { //图例组件
+                            bottom: 10, //组件距容器底部的距离
+                            left: 'center', //组件距容器左部的距离
+                            data: ['A股票', 'MA5', 'MA10', 'MA20', 'MA30'] //图例数据数组
+                        },
+                        tooltip: { //提示框组件
+                            trigger: 'axis', //坐标轴触发
+                            axisPointer: { //配置项
+                                type: 'line'
+                            }
+                        },
+                        toolbox: { //工具栏：内置有导出图片，数据视图，动态类型切换，数据区域缩放，重置五个工具
+                            feature: { //各工具配置项
+                                dataZoom: { //数据区域缩放
+                                    yAxisIndex: false
+                                },
+                                brush: { //选框组件的控制按钮
+                                    type: ['lineX', 'clear', 'lineY']
+                                }
+                            }
+                        },
+                        grid: [{ //绘图网格，设置上下两个坐标区域
+                            left: '10%',
+                            right: '8%',
+                            height: '50%'
+                        }, {
+                            left: '10%',
+                            right: '8%',
+                            top: '63%',
+                            height: '16%'
+                        }],
+                        xAxis: [{ //直角坐标系grid中的x轴
+                            type: 'category', //设置坐标轴类型，category类目型，不连续
+                            data: datas.categoryData, //类目数据
+                            scale: true, //true，脱离0值比例
+                            boundaryGap: false, //坐标轴两边留白
+                            axisLine: { //坐标轴轴线
+                                onZero: false
+                            },
+                            splitLine: { //坐标轴在grid区域的分割线
+                                show: false
+                            },
+                            splitNumber: 20, //分割段数
+                            min: 'dataMin', //最小值
+                            max: 'dataMax' //最大值
+                        }, {
+                            type: 'category',
+                            gridIndex: 1, //x轴所在的grid的索引
+                            data: datas.categoryData,
+                            scale: true,
+                            boundaryGap: false,
+                            axisLine: {
+                                onZero: false
+                            },
+                            axisTick: { //坐标轴刻度
+                                show: false
+                            },
+                            splitLine: {
+                                show: false
+                            },
+                            axisLabel: { //坐标轴刻度标签
+                                show: false
+                            },
+                            splitNumber: 20,
+                            min: 'dataMin',
+                            max: 'dataMax'
+                        }],
+                        yAxis: [{
+                            scale: true,
+                            splitArea: { //坐标轴在 grid 区域中的分隔区域，默认不显示。
+                                show: true
+                            }
+                        }, {
+                            scale: true,
+                            gridIndex: 1,
+                            splitNumber: 20,
+                            axisLabel: {
+                                show: false
+                            },
+                            axisLine: {
+                                show: false
+                            },
+                            axisTick: {
+                                show: false
+                            },
+                            splitLine: {
+                                show: false
+                            }
+                        }],
+                        dataZoom: [{ //区域缩放
+                            type: 'inside', //内置型数据区域缩放组件
+                            xAxisIndex: [0, 1],
+                            start: 80, //控制start、end从而控制个数 百分比
+                            end: 100
+                        }, {
+                            show: true,
+                            xAxisIndex: [0, 1],
+                            type: 'slider', //滑动条型数据区域缩放组件（dataZoomSlider）
+                            top: '85%',
+                            start: 80,
+                            end: 100
+                        }],
+                        series: [{ //系列列表，每个系列通过type定义自己的图标类型
+                            name: 'A股票',
+                            type: 'candlestick', //k线图
+                            data: datas.values,
+                            itemStyle: { //折现拐点标识样式
+                                normal: {
+                                    borderColor: null
+                                }
+                            },
+                            tooltip: { //提示框
+                                formatter: function(param) { //提示框浮层内容格式器
+                                    var param = param[0];
+                                    return [
+                                        'Date: ' + param.name + '<hr size=1 style="margin: 3px 0">',
+                                        'Open: ' + param.data[0] + '<br/>',
+                                        'Close: ' + param.data[1] + '<br/>',
+                                        'Lowest: ' + param.data[2] + '<br/>',
+                                        'Highest: ' + param.data[3] + '<br/>'
+                                    ].join('');
+                                }
+                            }
+                        }, {
+                            name: 'MA5',
+                            type: 'line',
+                            data: calculateMA(5, datas),
+                            smooth: true, //平滑曲线显示
+                            lineStyle: { //线条样式
+                                normal: {
+                                    opacity: 0.5
+                                }
+                            }
+                        }, {
+                            name: 'MA10',
+                            type: 'line',
+                            data: calculateMA(10, datas),
+                            smooth: true,
+                            lineStyle: {
+                                normal: {
+                                    opacity: 0.5
+                                }
+                            }
+                        }, {
+                            name: 'MA20',
+                            type: 'line',
+                            data: calculateMA(20, datas),
+                            smooth: true,
+                            lineStyle: {
+                                normal: {
+                                    opacity: 0.5
+                                }
+                            }
+                        }, {
+                            name: 'MA30',
+                            type: 'line',
+                            data: calculateMA(30, datas),
+                            smooth: true,
+                            lineStyle: {
+                                normal: {
+                                    opacity: 0.5
+                                }
+                            }
+                        }, {
+                            name: 'Volumn',
+                            type: 'bar',
+                            xAxisIndex: 1,
+                            yAxisIndex: 1,
+                            data: datas.Volume
+                        }]
+                    }
+                    myEcharts.setOption(option);
+                } else {
+                    alert("服务器错误")
                 }
             }
-            datas = {
-                categoryData: categoryData,
-                values: values,
-                Volume: Volume
+        }
+        xhr.send(null)
+
+        function calculateMA(dayCount, data) { //平均移动线计算函数
+            var result = [];
+            for (var i = 0, len = data.values.length; i < len; i++) {
+                if (i < dayCount) {
+                    result.push('-');
+                    continue;
+                }
+                var sum = 0;
+                for (var j = 0; j < dayCount; j++) {
+                    sum += data.values[i - j][1];
+                }
+                result.push(+(sum / dayCount).toFixed(3)); //toFixed(3)四舍五入保留3个小数
             }
-            console.log(datas)
-                /*********************渲染************************/
-            var myEcharts = echarts.init(document.getElementById('myEcharts'));
-            var option = {
-                backgroundColor: '#eee',
-                animation: false,
-                legend: {
-                    bottom: 10,
-                    left: 'center',
-                    data: ['A股票', 'MA5', 'MA10', 'MA20', 'MA30']
-                },
-                tooltip: {
-                    trigger: 'axis',
-                    axisPointer: {
-                        type: 'line'
-                    }
-                },
-                toolbox: {
-                    feature: {
-                        dataZoom: {
-                            yAxisIndex: false
-                        },
-                        brush: {
-                            type: ['lineX', 'clear']
-                        }
-                    }
-                },
-                grid: [{
-                    left: '10%',
-                    right: '8%',
-                    height: '50%'
-                }, {
-                    left: '10%',
-                    right: '8%',
-                    top: '63%',
-                    height: '16%'
-                }],
-                xAxis: [{
-                    type: 'category',
-                    data: datas.categoryData,
-                    scale: true,
-                    boundaryGap: false,
-                    axisLine: {
-                        onZero: false
-                    },
-                    splitLine: {
-                        show: false
-                    },
-                    splitNumber: 20,
-                    min: 'dataMin',
-                    max: 'dataMax'
-                }, {
-                    type: 'category',
-                    gridIndex: 1,
-                    data: datas.categoryData,
-                    scale: true,
-                    boundaryGap: false,
-                    axisLine: {
-                        onZero: false
-                    },
-                    axisTick: {
-                        show: false
-                    },
-                    splitLine: {
-                        show: false
-                    },
-                    axisLabel: {
-                        show: false
-                    },
-                    splitNumber: 20,
-                    min: 'dataMin',
-                    max: 'dataMax'
-                }],
-                yAxis: [{
-                    scale: true,
-                    splitArea: {
-                        show: true
-                    }
-                }, {
-                    scale: true,
-                    gridIndex: 1,
-                    splitNumber: 20,
-                    axisLabel: {
-                        show: false
-                    },
-                    axisLine: {
-                        show: false
-                    },
-                    axisTick: {
-                        show: false
-                    },
-                    splitLine: {
-                        show: false
-                    }
-                }],
-                dataZoom: [{
-                    type: 'inside',
-                    xAxisIndex: [0, 1],
-                    start: 80, //控制start、end从而控制个数
-                    end: 100
-                }, {
-                    show: true,
-                    xAxisIndex: [0, 1],
-                    type: 'slider',
-                    top: '85%',
-                    start: 80,
-                    end: 100
-                }],
-                series: [{
-                    name: 'A股票',
-                    type: 'candlestick',
-                    data: datas.values,
-                    itemStyle: {
-                        normal: {
-                            borderColor: null,
-                            borderColor0: null
-                        }
-                    },
-                    tooltip: {
-                        formatter: function(param) {
-                            var param = param[0];
-                            return [
-                                'Date: ' + param.name + '<hr size=1 style="margin: 3px 0">',
-                                'Open: ' + param.data[0] + '<br/>',
-                                'Close: ' + param.data[1] + '<br/>',
-                                'Lowest: ' + param.data[2] + '<br/>',
-                                'Highest: ' + param.data[3] + '<br/>'
-                            ].join('');
-                        }
-                    }
-                }, {
-                    name: 'MA5',
-                    type: 'line',
-                    data: calculateMA(5, datas),
-                    smooth: true,
-                    lineStyle: {
-                        normal: {
-                            opacity: 0.5
-                        }
-                    }
-                }, {
-                    name: 'MA10',
-                    type: 'line',
-                    data: calculateMA(10, datas),
-                    smooth: true,
-                    lineStyle: {
-                        normal: {
-                            opacity: 0.5
-                        }
-                    }
-                }, {
-                    name: 'MA20',
-                    type: 'line',
-                    data: calculateMA(20, datas),
-                    smooth: true,
-                    lineStyle: {
-                        normal: {
-                            opacity: 0.5
-                        }
-                    }
-                }, {
-                    name: 'MA30',
-                    type: 'line',
-                    data: calculateMA(30, datas),
-                    smooth: true,
-                    lineStyle: {
-                        normal: {
-                            opacity: 0.5
-                        }
-                    }
-                }, {
-                    name: 'Volumn',
-                    type: 'bar',
-                    xAxisIndex: 1,
-                    yAxisIndex: 1,
-                    data: datas.Volume
-                }]
-            }
-            myEcharts.setOption(option);
-        } else {
-            alert("服务器错误")
+            return result;
         }
-    }
-}
-xhr.send(null)
-function calculateMA(dayCount, data) {
-    var result = [];
-    for (var i = 0, len = data.values.length; i < len; i++) {
-        if (i < dayCount) {
-            result.push('-');
-            continue;
-        }
-        var sum = 0;
-        for (var j = 0; j < dayCount; j++) {
-            sum += data.values[i - j][1];
-        }
-        result.push(+(sum / dayCount).toFixed(3));
-    }
-    return result;
-}
     </script>
 </body>
+
 </html>

@@ -12,21 +12,21 @@
 </body>
 <script type="text/javascript">
     let xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState == 4){
-            if ((xhr.status >=200 && xhr.status < 300)||(xhr.status == 304)){
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4) {
+            if ((xhr.status >= 200 && xhr.status < 300) || (xhr.status == 304)) {
                 let chinaJson = JSON.parse(xhr.responseText);
-                echarts.registerMap('china', chinaJson);
+                echarts.registerMap('china', chinaJson); //注册可用地图
 
                 let myChart = echarts.init(document.getElementById('myEcharts'));
                 let option = {
-                    series:[{
-                        type:'map',
-                        map:'china'
+                    series: [{ //系列列表，通过type定义图表的类型
+                        type: 'map',
+                        map: 'china'
                     }]
                 };
-                myChart.setOption(option);
-            }else {
+                myChart.setOption(option); //设置配置项和数据
+            } else {
                 alert("失败");
             }
         }
