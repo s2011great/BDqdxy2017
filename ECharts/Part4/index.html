@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>ECharts PART3</title>
+</head>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/echarts/3.5.4/echarts.min.js"></script>
+
+<body>
+    <div id="myEcharts" style="width: 800px; height: 800px;"></div>
+</body>
+<script type="text/javascript">
+    let xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4){
+            if ((xhr.status >=200 && xhr.status < 300)||(xhr.status == 304)){
+                let chinaJson = JSON.parse(xhr.responseText);
+                echarts.registerMap('china', chinaJson);
+
+                let myChart = echarts.init(document.getElementById('myEcharts'));
+                let option = {
+                    series:[{
+                        type:'map',
+                        map:'china'
+                    }]
+                };
+                myChart.setOption(option);
+            }else {
+                alert("失败");
+            }
+        }
+    };
+    xhr.open('get', './china.json', true);
+    xhr.send(null);
+</script>
+
+</html>
